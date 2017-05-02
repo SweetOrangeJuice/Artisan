@@ -1,4 +1,4 @@
-package com.sweetorangejuice.artisan.controller;
+package com.sweetorangejuice.artisan;
 
 import android.app.Application;
 
