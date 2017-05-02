@@ -9,4 +9,7 @@
     <string name="sign_up">注册</string>
     <string name="skip">跳过</string>
     <string name="remember_account">记住账号</string>
+    <string name="sign_up_email">邮箱</string>
+    <string name="login_sign_up">现在成为匠心一员</string>
+    <string name="login_sign_in">现在登录匠心</string>
 </resources>
