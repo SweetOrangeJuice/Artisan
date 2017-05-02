@@ -18,11 +18,11 @@ android {
         }
     }
     //为了解决部分第三方库重复打包了META-INF的问题
-    packagingOptions{
+    packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
     }
-    lintOptions{
+    lintOptions {
         abortOnError false
     }
 }
@@ -32,10 +32,13 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.1.1'
 
     // LeanCloud 基础包
-    compile ('cn.leancloud.android:avoscloud-sdk:v3.+')
 
+
+    compile 'com.android.support:appcompat-v7:25.1.1'
+    compile 'cn.leancloud.android:avoscloud-sdk:v3.+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.1'
+    compile 'com.android.support:support-v4:25.3.1'
     testCompile 'junit:junit:4.12'
 }
