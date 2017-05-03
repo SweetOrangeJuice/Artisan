@@ -2,7 +2,14 @@ package com.sweetorangejuice.artisan.view;
 
 import android.support.v4.app.Fragment;
 
-import com.sweetorangejuice.artisan.base.SingleFragmentActivity;
+import com.sweetorangejuice.artisan.view.base.SingleFragmentActivity;
+
+/**
+ * @author 李易沾
+ * Created by liyizhan in 2017/5/2
+ * 功能简述
+ * 登录和注册的Activity
+ */
 
 public class LoginActivity extends SingleFragmentActivity {
 
@@ -12,6 +19,6 @@ public class LoginActivity extends SingleFragmentActivity {
      */
     @Override
     protected Fragment createFragment() {
-        return new SignInFragment();
+        return new LoginFragment();
     }
 }
