@@ -1,8 +1,9 @@
-package com.sweetorangejuice.artisan.view;
+package com.sweetorangejuice.artisan.view.Activity;
 
 import android.support.v4.app.Fragment;
 
-import com.sweetorangejuice.artisan.view.base.SingleFragmentActivity;
+import com.sweetorangejuice.artisan.view.Fragment.LoginFragment;
+import com.sweetorangejuice.artisan.base.SingleFragmentActivity;
 
 /**
  * @author 李易沾
@@ -19,6 +20,6 @@ public class LoginActivity extends SingleFragmentActivity {
      */
     @Override
     protected Fragment createFragment() {
-        return new LoginFragment();
+        return LoginFragment.newInstance();
     }
 }

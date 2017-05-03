@@ -1,4 +1,4 @@
-package com.sweetorangejuice.artisan.view.base;
+package com.sweetorangejuice.artisan.base;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

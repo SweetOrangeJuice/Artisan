@@ -12,4 +12,5 @@
     <string name="sign_up_email">邮箱</string>
     <string name="login_sign_up">现在成为匠心一员</string>
     <string name="login_sign_in">现在登录匠心</string>
+    <string name="sign_up_failed">注册失败</string>
 </resources>
