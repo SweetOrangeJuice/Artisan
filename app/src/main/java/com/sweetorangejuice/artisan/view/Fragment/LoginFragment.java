@@ -1,4 +1,4 @@
-package com.sweetorangejuice.artisan.view;
+package com.sweetorangejuice.artisan.view.Fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;

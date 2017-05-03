@@ -1,7 +1,8 @@
-package com.sweetorangejuice.artisan.view;
+package com.sweetorangejuice.artisan.view.Activity;
 
 import android.support.v4.app.Fragment;
 
+import com.sweetorangejuice.artisan.view.Fragment.LoginFragment;
 import com.sweetorangejuice.artisan.view.base.SingleFragmentActivity;
 
 /**

@@ -1,4 +1,4 @@
-package com.sweetorangejuice.artisan.view;
+package com.sweetorangejuice.artisan.view.Activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
