@@ -1,19 +1,19 @@
-package com.sweetorangejuice.artisan.base;
+package com.sweetorangejuice.artisan.view.base;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 
 import com.sweetorangejuice.artisan.R;
 
 /**
- * Author:李易沾
- * Date:2017/5/2
- * Function:实现存放单个Fragment的抽象类，子类负责告知如何创建Fragment即可.
+ * @author:李易沾
+ * Created by liyizhan on 2017/5/2.
+ * 功能简述
+ * 实现存放单个Fragment的抽象类，子类负责告知如何创建Fragment即可.
  */
 
-public abstract class SingleFragmentActivity extends AppCompatActivity {
+public abstract class SingleFragmentActivity extends BaseActivity {
 
     /**
      * 子类必须实现如何创建子类Fragment，才能返回子类Fragment

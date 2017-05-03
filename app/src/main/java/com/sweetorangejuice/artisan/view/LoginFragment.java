@@ -16,12 +16,13 @@ import android.widget.TextView;
 import com.sweetorangejuice.artisan.R;
 
 /**
- * Author 李易沾
- * Created by 李易沾 in 2017/5/2
- * Function:登录和注册的Fragment
+ * @author 李易沾
+ * Created by liyizhan in 2017/5/2
+ * 功能简述
+ * 登录和注册的Fragment
  */
 
-public class SignInFragment extends Fragment {
+public class LoginFragment extends Fragment {
 
     //判断登录还是注册的值,false代表登录，true代表注册
     private boolean mLoginStatus;
@@ -49,7 +50,7 @@ public class SignInFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_sign_in,container,false);
+        View view=inflater.inflate(R.layout.fragment_login,container,false);
 
         //绑定视图
         mSignInLinearLayout=(LinearLayout)view.findViewById(R.id.sign_in_linear_layout);

@@ -22,6 +22,11 @@ allprojects {
         maven {
             url "http://mvn.leancloud.cn/nexus/content/repositories/public"
         }
+
+        //下面是github上引用的第三方库TabContainerView
+        maven {
+            url 'https://jitpack.io'
+        }
     }
 }
 
