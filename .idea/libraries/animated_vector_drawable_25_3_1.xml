@@ -6,11 +6,7 @@
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-<<<<<<< HEAD:.idea/libraries/animated_vector_drawable_25_1_1.xml
-      <root url="jar://$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/animated-vector-drawable/25.1.1/animated-vector-drawable-25.1.1-sources.jar!/" />
-=======
       <root url="jar://G:/androidstudio/SDK/extras/android/m2repository/com/android/support/animated-vector-drawable/25.3.1/animated-vector-drawable-25.3.1-sources.jar!/" />
->>>>>>> d6870a9782c10de0aecfba8cfe4d3bfb7f662201:.idea/libraries/animated_vector_drawable_25_3_1.xml
     </SOURCES>
   </library>
 </component>

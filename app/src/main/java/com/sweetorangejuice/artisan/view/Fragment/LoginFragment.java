@@ -1,7 +1,9 @@
 package com.sweetorangejuice.artisan.view.Fragment;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,8 +14,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sweetorangejuice.artisan.R;
+import com.sweetorangejuice.artisan.controller.LoginController;
 
 /**
  * @author 李易沾
@@ -24,7 +28,11 @@ import com.sweetorangejuice.artisan.R;
 
 public class LoginFragment extends Fragment {
 
-    //判断登录还是注册的值,false代表登录，true代表注册
+    //SharedPreferences相关常量
+    private static final String SHARED_PREFERENCES_REMEMBER="remember";
+    private static final String SHARED_PREFERENCES_ACCOUNT="account";
+
+    //判断登录还是注册选项卡值,false代表登录，true代表注册
     private boolean mLoginStatus;
 
     //非登录或注册视图
@@ -80,11 +88,99 @@ public class LoginFragment extends Fragment {
                 updateLoginUI(true);
             }
         });
+        mLoginSignInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signIn();
+            }
+        });
+        mLoginSignUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signUp();
+            }
+        });
+        mSkipTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                skip();
+            }
+        });
 
         //首次打开，显示登陆视图
         updateLoginUI(false);
 
+        //若用户记住了账户，自动填写账户
+        SharedPreferences sharedPreferences=PreferenceManager.getDefaultSharedPreferences(getActivity());
+        boolean isRemember=sharedPreferences.getBoolean(SHARED_PREFERENCES_REMEMBER,false);
+        if(isRemember){
+            mSignInRememberAccountCheckBox.setChecked(true);
+            mSignInAccountEditText.setText(sharedPreferences.getString(SHARED_PREFERENCES_ACCOUNT,""));
+        }
+
         return view;
+    }
+
+    /**
+     * skip:用户点击跳过后触发的方法
+     */
+    private void skip(){
+        //TODO:跳转至指定页面
+    }
+
+    /**
+     * signUp:注册相关函数
+     */
+    private void signUp(){
+        boolean isSignUpSuccess;
+        String username=mSignUpAccountEditText.getText().toString();
+        String password=mSignUpPasswordEditText.getText().toString();
+        String email=mSignUpEmailEditText.getText().toString();
+        isSignUpSuccess= LoginController.signUp(username,password,email);
+
+        if(isSignUpSuccess){
+            //TODO:注册成功后跳转至指定页面
+        }else{
+            //日后注册失败可以替换成别的提示语句
+            Toast.makeText(getActivity(),getString(R.string.sign_up_failed),Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * sign:登录相关函数
+     */
+    private void signIn(){
+        boolean isSignInSuccess;
+        String username=mSignInAccountEditText.getText().toString();
+        String password=mSignInPasswordEditText.getText().toString();
+        isSignInSuccess=LoginController.signIn(username,password);
+
+        if(isSignInSuccess){
+            //检查是否记住了账号，是则保存在SharedPreferences中，否则清除记住状态
+            rememberAccount(mSignInRememberAccountCheckBox.isChecked(),username);
+
+            //TODO:登录成功后跳转至指定页面
+        }else{
+            //日后登录失败可以替换成别的提示语句
+            Toast.makeText(getActivity(),getString(R.string.sign_up_failed),Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * rememberAccount:检查是否记住了账号，是则保存在SharedPreferences中，否则清除记住状态
+     * @param isChecked 记住账号框的勾选状态
+     * @param account   用户名
+     */
+    private void rememberAccount(boolean isChecked,String account){
+        SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        if(isChecked){
+            editor.putBoolean(SHARED_PREFERENCES_REMEMBER,true);
+            editor.putString(SHARED_PREFERENCES_ACCOUNT,account);
+        }else{
+            editor.clear();
+        }
+        editor.apply();
     }
 
 
@@ -105,5 +201,13 @@ public class LoginFragment extends Fragment {
             mSignInButton.setBackgroundColor(Color.TRANSPARENT);
             mSignUpButton.setBackgroundColor(0xFF6495ED);
         }
+    }
+
+    /**
+     * newInstance:返回LoginFragment的一个实例
+     * @return  LoginFragment的一个实例
+     */
+    public static Fragment newInstance(){
+        return new LoginFragment();
     }
 }

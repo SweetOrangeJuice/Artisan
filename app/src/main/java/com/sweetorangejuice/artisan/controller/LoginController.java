@@ -27,7 +27,7 @@ public class LoginController {
      * @param email 邮箱
      * @return 注册成功返回true，注册失败返回false
      */
-    public static boolean SignUp(String username,String password,String email)
+    public static boolean signUp(String username,String password,String email)
     {
         AVUser user = new AVUser();                         // 新建  AVUser 对象实例
         user.setUsername(username);                         // 设置用户名
@@ -59,7 +59,7 @@ public class LoginController {
      * @param password
      * @return 登录成功返回true,登录失败返回false
      */
-    public static boolean SignIn(String username,String password){
+    public static boolean signIn(String username,String password){
         AVUser.logInInBackground(username, password, new LogInCallback<AVUser>() {
             @Override                                           //后台登录函数
             public void done(AVUser avUser, AVException e) {
