@@ -202,13 +202,17 @@ public class LoginFragment extends Fragment {
         if(!mLoginStatus){
             mSignInLinearLayout.setVisibility(View.VISIBLE);
             mSignUpLinearLayout.setVisibility(View.GONE);
-            mSignInButton.setBackgroundColor(0xFF6495ED);
+            mSignInButton.setBackgroundColor(Color.BLACK);
+            mSignInButton.setTextColor(Color.WHITE);
             mSignUpButton.setBackgroundColor(Color.TRANSPARENT);
+            mSignUpButton.setTextColor(Color.BLACK);
         }else{
             mSignInLinearLayout.setVisibility(View.GONE);
             mSignUpLinearLayout.setVisibility(View.VISIBLE);
             mSignInButton.setBackgroundColor(Color.TRANSPARENT);
-            mSignUpButton.setBackgroundColor(0xFF6495ED);
+            mSignInButton.setTextColor(Color.BLACK);
+            mSignUpButton.setBackgroundColor(Color.BLACK);
+            mSignUpButton.setTextColor(Color.WHITE);
         }
     }
 
