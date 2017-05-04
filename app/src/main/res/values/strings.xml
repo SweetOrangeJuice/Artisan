@@ -13,4 +13,10 @@
     <string name="login_sign_up">现在成为匠心一员</string>
     <string name="login_sign_in">现在登录匠心</string>
     <string name="sign_up_failed">注册失败</string>
+    <string name="sign_in_failed">登录失败</string>
+    <string name="main_activity_home">主页</string>
+    <string name="main_activity_plaza">广场</string>
+    <string name="main_activity_moments">发布</string>
+    <string name="main_activity_shopping">商城</string>
+    <string name="main_activity_personal">我</string>
 </resources>

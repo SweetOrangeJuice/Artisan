@@ -17,7 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sweetorangejuice.artisan.R;
+import com.sweetorangejuice.artisan.base.ArtisanApplication;
+import com.sweetorangejuice.artisan.base.BaseActivity;
 import com.sweetorangejuice.artisan.controller.LoginController;
+import com.sweetorangejuice.artisan.view.Activity.MainActivity;
 
 /**
  * @author 李易沾
@@ -125,45 +128,51 @@ public class LoginFragment extends Fragment {
      * skip:用户点击跳过后触发的方法
      */
     private void skip(){
-        //TODO:跳转至指定页面
+        jump();
     }
 
     /**
      * signUp:注册相关函数
      */
     private void signUp(){
-        boolean isSignUpSuccess;
+        //boolean isSignUpSuccess;
         String username=mSignUpAccountEditText.getText().toString();
         String password=mSignUpPasswordEditText.getText().toString();
         String email=mSignUpEmailEditText.getText().toString();
-        isSignUpSuccess= LoginController.signUp(username,password,email);
-
+        //isSignUpSuccess= LoginController.signUp(username,password,email);
+        //LogUtil.d("TAG",isSignUpSuccess+"");
+        LoginController.signUp(username,password,email);
+        /*
         if(isSignUpSuccess){
-            //TODO:注册成功后跳转至指定页面
+            jump();
         }else{
             //日后注册失败可以替换成别的提示语句
             Toast.makeText(getActivity(),getString(R.string.sign_up_failed),Toast.LENGTH_SHORT).show();
         }
+        */
     }
 
     /**
      * sign:登录相关函数
      */
     private void signIn(){
-        boolean isSignInSuccess;
+        //boolean isSignInSuccess;
         String username=mSignInAccountEditText.getText().toString();
         String password=mSignInPasswordEditText.getText().toString();
-        isSignInSuccess=LoginController.signIn(username,password);
+        //isSignInSuccess=LoginController.signIn(username,password);
 
+        LoginController.signIn(username,password);
+        /*
         if(isSignInSuccess){
             //检查是否记住了账号，是则保存在SharedPreferences中，否则清除记住状态
             rememberAccount(mSignInRememberAccountCheckBox.isChecked(),username);
 
-            //TODO:登录成功后跳转至指定页面
+            jump();
         }else{
             //日后登录失败可以替换成别的提示语句
-            Toast.makeText(getActivity(),getString(R.string.sign_up_failed),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),getString(R.string.sign_in_failed),Toast.LENGTH_SHORT).show();
         }
+        */
     }
 
     /**
@@ -204,10 +213,37 @@ public class LoginFragment extends Fragment {
     }
 
     /**
+     * jump跳转到主活动并终结登录相关页面
+     */
+    private static void jump(){
+        MainActivity.actionStart(ArtisanApplication.getContext());
+    }
+
+    /**
      * newInstance:返回LoginFragment的一个实例
      * @return  LoginFragment的一个实例
      */
     public static Fragment newInstance(){
         return new LoginFragment();
+    }
+
+    public static void onSignUpSucceed(){
+        BaseActivity.finishAll();
+        jump();
+    }
+
+    public static void onSignUpFailed(){
+        Toast.makeText(ArtisanApplication.getContext(),
+                "注册失败",Toast.LENGTH_SHORT).show();
+    }
+
+    public static void onSignInSucceed(){
+        BaseActivity.finishAll();
+        jump();
+    }
+
+    public static void onSignInFailed(){
+        Toast.makeText(ArtisanApplication.getContext(),
+                "登录失败",Toast.LENGTH_SHORT).show();
     }
 }
