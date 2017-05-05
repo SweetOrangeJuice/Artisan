@@ -27,6 +27,8 @@ public class PersonalFragment extends Fragment {
     private TextView mNameTextView;
     private LinearLayout mMomentsLinearLayout;
     private LinearLayout mCollectionsLinearLayout;
+    private LinearLayout mIdolsLinearLayout;
+    private LinearLayout mFollowersLinearLayout;
     private LinearLayout mMessagesLinearLayout;
     private ImageView mRedDotImageView;
     private LinearLayout mProfilesLinearLayout;
@@ -67,13 +69,17 @@ public class PersonalFragment extends Fragment {
         });
 
         //视图初始化
-        if(mCurrentUser!=null){
-            mLogOutButton.setText(R.string.fragment_personal_log_out);
-        }else{
-            mLogOutButton.setText(R.string.fragment_personal_login);
-        }
+        updateUI();
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //恢复到前台可见的时候重新获取一次mCurrentUser
+        mCurrentUser=AVUser.getCurrentUser();
+        updateUI();
     }
 
     /**
@@ -82,5 +88,16 @@ public class PersonalFragment extends Fragment {
      */
     public static Fragment newInstance(){
         return new PersonalFragment();
+    }
+
+    private void updateUI(){
+        if(mCurrentUser!=null){
+            mLogOutButton.setText(R.string.fragment_personal_log_out);
+            String name=mCurrentUser.getUsername();
+            mNameTextView.setText(name);
+        }else{
+            mLogOutButton.setText(R.string.fragment_personal_login);
+            mNameTextView.setText(R.string.tourist);
+        }
     }
 }

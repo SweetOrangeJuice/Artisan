@@ -27,4 +27,6 @@
     <string name="fragment_personal_profiles">个人资料</string>
     <string name="fragment_personal_log_out">退出登录/切换账户</string>
     <string name="fragment_personal_login">登录/注册</string>
+    <string name="fragment_personal_idols">我的关注</string>
+    <string name="fragment_personal_followers">我的粉丝</string>
 </resources>
