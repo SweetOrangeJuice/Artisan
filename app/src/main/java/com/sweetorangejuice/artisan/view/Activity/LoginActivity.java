@@ -1,9 +1,11 @@
 package com.sweetorangejuice.artisan.view.Activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 
-import com.sweetorangejuice.artisan.view.Fragment.LoginFragment;
 import com.sweetorangejuice.artisan.base.SingleFragmentActivity;
+import com.sweetorangejuice.artisan.view.Fragment.LoginFragment;
 
 /**
  * @author 李易沾
@@ -13,6 +15,11 @@ import com.sweetorangejuice.artisan.base.SingleFragmentActivity;
  */
 
 public class LoginActivity extends SingleFragmentActivity {
+
+    public static void startAction(Context context){
+        Intent intent=new Intent(context,LoginActivity.class);
+        context.startActivity(intent);
+    }
 
     /**
      * 创建登录界面Fragment

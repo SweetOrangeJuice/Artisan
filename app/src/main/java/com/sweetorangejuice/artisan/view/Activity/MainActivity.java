@@ -129,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         //构建滑动Fragment和选项卡
         mTabContainerView.setAdapter(new MainActivityAdapter
                 (getSupportFragmentManager(),mFragments));
+
     }
 
     /**

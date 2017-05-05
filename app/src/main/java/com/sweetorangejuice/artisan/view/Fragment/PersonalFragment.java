@@ -6,8 +6,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.avos.avoscloud.AVUser;
 import com.sweetorangejuice.artisan.R;
+import com.sweetorangejuice.artisan.controller.PersonalController;
 
 /**
  * Created by as on 2017/5/3.
@@ -15,10 +21,57 @@ import com.sweetorangejuice.artisan.R;
 
 public class PersonalFragment extends Fragment {
 
+    //视图组件
+    private ImageView mSettingImageView;
+    private ImageView mHeadPortraitImageView;
+    private TextView mNameTextView;
+    private LinearLayout mMomentsLinearLayout;
+    private LinearLayout mCollectionsLinearLayout;
+    private LinearLayout mMessagesLinearLayout;
+    private ImageView mRedDotImageView;
+    private LinearLayout mProfilesLinearLayout;
+    private Button mLogOutButton;
+
+    //当前用户
+    private AVUser mCurrentUser;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mCurrentUser=AVUser.getCurrentUser();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_personal,container,false);
+
+        //绑定视图
+        mSettingImageView=(ImageView)view.findViewById(R.id.fragment_personal_setting);
+        mHeadPortraitImageView=(ImageView)view.findViewById(R.id.fragment_personal_head_portrait);
+        mNameTextView=(TextView)view.findViewById(R.id.fragment_personal_name);
+        mMomentsLinearLayout=(LinearLayout)view.findViewById(R.id.fragment_personal_moments);
+        mCollectionsLinearLayout=(LinearLayout)view.findViewById(R.id.fragment_personal_collections);
+        mMessagesLinearLayout=(LinearLayout)view.findViewById(R.id.fragment_personal_messages);
+        mRedDotImageView=(ImageView)view.findViewById(R.id.fragment_personal_red_dot);
+        mProfilesLinearLayout=(LinearLayout)view.findViewById(R.id.fragment_personal_profiles);
+        mLogOutButton=(Button)view.findViewById(R.id.fragment_personal_log_out);
+
+        //绑定事件
+
+        mLogOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PersonalController.logOut(mCurrentUser);
+            }
+        });
+
+        //视图初始化
+        if(mCurrentUser!=null){
+            mLogOutButton.setText(R.string.fragment_personal_log_out);
+        }else{
+            mLogOutButton.setText(R.string.fragment_personal_login);
+        }
 
         return view;
     }
