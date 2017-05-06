@@ -106,6 +106,7 @@ public class LoginFragment extends Fragment {
         mSkipTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                BaseActivity.finishAll();
                 skip();
             }
         });

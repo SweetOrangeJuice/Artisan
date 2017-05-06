@@ -29,4 +29,5 @@
     <string name="fragment_personal_login">登录/注册</string>
     <string name="fragment_personal_idols">我的关注</string>
     <string name="fragment_personal_followers">我的粉丝</string>
+    <string name="fragment_moments_block_tips">你现在还没有登录，赶紧去登录吧~</string>
 </resources>

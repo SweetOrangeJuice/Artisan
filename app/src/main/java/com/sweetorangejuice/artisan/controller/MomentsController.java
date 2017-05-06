@@ -5,7 +5,10 @@ import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.SaveCallback;
+import com.sweetorangejuice.artisan.base.ArtisanApplication;
+import com.sweetorangejuice.artisan.base.BaseActivity;
 import com.sweetorangejuice.artisan.model.MomentsBean;
+import com.sweetorangejuice.artisan.view.Activity.LoginActivity;
 
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
@@ -88,5 +91,10 @@ public class MomentsController {
             return true;
         }else
             return false;
+    }
+
+    public static void login(){
+        BaseActivity.finishAll();
+        LoginActivity.startAction(ArtisanApplication.getContext());
     }
 }
