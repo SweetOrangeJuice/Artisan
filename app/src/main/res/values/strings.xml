@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">Artisan</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sign_in_account_hint">请输入账户</string>
+    <string name="sign_in_password_hint">请输入密码</string>
+    <string name="sign_in">登录</string>
+    <string name="sign_up">注册</string>
+    <string name="skip">跳过</string>
+    <string name="remember_account">记住账号</string>
+    <string name="sign_up_email_hint">请输入邮箱</string>
+    <string name="login_sign_up">现在成为匠心一员</string>
+    <string name="login_sign_in">现在登录匠心</string>
+    <string name="sign_up_failed">注册失败</string>
+    <string name="sign_in_failed">登录失败</string>
+    <string name="main_activity_home">主页</string>
+    <string name="main_activity_plaza">广场</string>
+    <string name="main_activity_moments">发布</string>
+    <string name="main_activity_shopping">商城</string>
+    <string name="main_activity_personal">我</string>
+    <string name="fragment_personal_me">我</string>
+    <string name="tourist">游客</string>
+    <string name="fragment_personal_moments">我的发布</string>
+    <string name="fragment_personal_collections">我的收藏</string>
+    <string name="fragment_personal_message">我的消息</string>
+    <string name="fragment_personal_profiles">个人资料</string>
+    <string name="fragment_personal_log_out">退出登录/切换账户</string>
+    <string name="fragment_personal_login">登录/注册</string>
+    <string name="fragment_personal_idols">我的关注</string>
+    <string name="fragment_personal_followers">我的粉丝</string>
+    <string name="fragment_moments_block_tips">你现在还没有登录，赶紧去登录吧~</string>
 </resources>
