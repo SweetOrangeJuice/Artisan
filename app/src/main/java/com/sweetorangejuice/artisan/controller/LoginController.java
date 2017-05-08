@@ -34,19 +34,20 @@ public class LoginController {
         user.setUsername(username);                         // 设置用户名
         user.setPassword(password);                         // 设置密码
         user.setEmail(email);                               // 设置邮箱
-        user.signUpInBackground(new SignUpCallback() {
-            @Override
-            public void done(AVException e) {
-                if (e == null) {
-                    LoginFragment.onSignUpSucceed();// 注册成功
-                    LogUtil.d("LoginController","注册成功");
-                } else {
-                    LoginFragment.onSignUpFailed();// 注册失败
-                    LogUtil.d("LoginController","注册失败");
-                    e.printStackTrace();
-                }
+        try {
+            user.signUp();
+        }catch(AVException e)
+        {
+            if (e == null) {
+                PersonalController.createPersonalInfo(user.getObjectId());
+                LoginFragment.onSignUpSucceed();// 注册成功
+                LogUtil.d("LoginController", "注册成功");
+            } else {
+                LoginFragment.onSignUpFailed();// 注册失败
+                LogUtil.d("LoginController", "注册失败");
+                e.printStackTrace();
             }
-        });
+        }
     }
 
     /**

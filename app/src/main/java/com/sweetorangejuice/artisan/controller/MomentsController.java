@@ -8,12 +8,11 @@ import com.avos.avoscloud.SaveCallback;
 import com.sweetorangejuice.artisan.base.ArtisanApplication;
 import com.sweetorangejuice.artisan.base.BaseActivity;
 import com.sweetorangejuice.artisan.model.MomentsBean;
+import com.sweetorangejuice.artisan.util.LogUtil;
 import com.sweetorangejuice.artisan.view.Activity.LoginActivity;
 
 import java.io.FileNotFoundException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * @author fortuneliu
@@ -24,10 +23,6 @@ import java.util.Date;
  */
 
 public class MomentsController {
-
-    private static String timePattern = "yyyy-MM-dd HH:mm:ss";      //时间戳的格式
-    private static boolean distributeState = false;                 //暂存发布状态，平时无用
-
     /**
      * checkMoments函数
      *      负责检查圈子内容齐全与否
@@ -50,7 +45,7 @@ public class MomentsController {
      * @param moments
      * @return
      */
-    public static boolean distributeMoments(MomentsBean moments){
+    public static void distributeMoments(MomentsBean moments){
         if(checkMoments(moments)) {
             int count = 0;
             ArrayList<AVFile> imageFiles = new ArrayList<>();
@@ -61,36 +56,34 @@ public class MomentsController {
                 }catch(FileNotFoundException e){
                     e.printStackTrace();
                 }finally {
-                    return false;
+                    /**
+                     * 在这里写发布失败的回调
+                     */
+                    LogUtil.d("MomentsController","Distribute Failed.");
                 }
             }
             AVObject momentsObject = new AVObject("Moments");
             momentsObject.put("tag",moments.getTag());
-            momentsObject.put("author", AVUser.getCurrentUser());
+            momentsObject.put("author", AVUser.getCurrentUser().getObjectId());
             momentsObject.put("images",imageFiles);
             momentsObject.put("text",moments.getText());
-
-            SimpleDateFormat format = new SimpleDateFormat(timePattern);
-            String sendTime = format.format(new Date());
-
-            momentsObject.put("time",sendTime);
-
             momentsObject.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(AVException e) {
                     if (e == null) {
-                        MomentsController.distributeState = true;
+                        /**
+                         * 在这里写发布成功的回调
+                         */
+                        LogUtil.d("MomentsController","Distribute Success.");
                     } else {
-                        MomentsController.distributeState = false;
+                        /**
+                         * 在这里写发布失败的回调
+                         */
+                        LogUtil.d("MomentsController","Distribute Failed.");
                     }
                 }
             });
         }
-        if(distributeState == true){
-            distributeState = false;
-            return true;
-        }else
-            return false;
     }
 
     public static void login(){
