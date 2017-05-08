@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eeeeee">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#03a9f4"
+        android:gravity="center"
+        android:text="图片选择"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <com.sweetorangejuice.artisan.controller.adapter.GridViewForListView
+        android:id="@+id/gridView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:layout_margin="10dp"
+        android:background="#ffffff"
+        android:gravity="left|top"
+        android:horizontalSpacing="5dp"
+        android:numColumns="4"
+        android:padding="5dp"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="5dp" >
+    </com.sweetorangejuice.artisan.controller.adapter.GridViewForListView>
+
+</RelativeLayout>
