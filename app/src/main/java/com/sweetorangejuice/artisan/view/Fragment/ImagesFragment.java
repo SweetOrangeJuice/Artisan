@@ -17,17 +17,27 @@ public class ImagesFragment extends WriteFragment {
 	private Context context;
 	private GridViewForListView mGridView;
 
+	private View mView;
+
 	public static Fragment newInstance(){
 		return new ImagesFragment();
 	}
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_image,container,false);
+		if(mView==null){
+			mView = inflater.inflate(R.layout.fragment_image,container,false);
+		}
 		context = getContext();
-		mGridView = (GridViewForListView) view.findViewById(R.id.gridView1);
+		mGridView = (GridViewForListView) mView.findViewById(R.id.gridView1);
 		setGridViewForListView(context, mGridView);
-		return view;
+		return mView;
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
 	}
 
 	/**

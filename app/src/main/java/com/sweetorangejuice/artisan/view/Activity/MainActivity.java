@@ -12,7 +12,6 @@ import com.fe.library.adapter.BaseAdapter;
 import com.sweetorangejuice.artisan.R;
 import com.sweetorangejuice.artisan.view.Fragment.HomeFragment;
 import com.sweetorangejuice.artisan.view.Fragment.ImagesFragment;
-import com.sweetorangejuice.artisan.view.Fragment.MomentsFragment;
 import com.sweetorangejuice.artisan.view.Fragment.PersonalFragment;
 import com.sweetorangejuice.artisan.view.Fragment.PlazaFragment;
 import com.sweetorangejuice.artisan.view.Fragment.ShoppingFragment;
@@ -111,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     private TabContainerView mTabContainerView;
 
     //Fragment数组，存放的是选项卡对应的Fragment
-    private Fragment[] mFragments=new Fragment[]{
+    private static Fragment[] mFragments=new Fragment[]{
             HomeFragment.newInstance(),
             PlazaFragment.newInstance(),
             //MomentsFragment.newInstance(),
