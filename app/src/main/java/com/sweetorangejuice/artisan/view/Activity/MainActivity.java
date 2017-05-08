@@ -11,6 +11,7 @@ import com.fe.library.TabContainerView;
 import com.fe.library.adapter.BaseAdapter;
 import com.sweetorangejuice.artisan.R;
 import com.sweetorangejuice.artisan.view.Fragment.HomeFragment;
+import com.sweetorangejuice.artisan.view.Fragment.ImagesFragment;
 import com.sweetorangejuice.artisan.view.Fragment.MomentsFragment;
 import com.sweetorangejuice.artisan.view.Fragment.PersonalFragment;
 import com.sweetorangejuice.artisan.view.Fragment.PlazaFragment;
@@ -113,7 +114,8 @@ public class MainActivity extends AppCompatActivity {
     private Fragment[] mFragments=new Fragment[]{
             HomeFragment.newInstance(),
             PlazaFragment.newInstance(),
-            MomentsFragment.newInstance(),
+            //MomentsFragment.newInstance(),
+            ImagesFragment.newInstance(),
             ShoppingFragment.newInstance(),
             PersonalFragment.newInstance(),
     };
