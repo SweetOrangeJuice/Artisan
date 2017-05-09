@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.avos.avoscloud.AVUser;
 import com.sweetorangejuice.artisan.R;
 import com.sweetorangejuice.artisan.base.ArtisanApplication;
 import com.sweetorangejuice.artisan.base.BaseActivity;
@@ -30,6 +31,8 @@ import com.sweetorangejuice.artisan.view.Activity.MainActivity;
  */
 
 public class LoginFragment extends Fragment {
+
+    private AVUser mCurrentUser;
 
     //SharedPreferences相关常量
     private static final String SHARED_PREFERENCES_REMEMBER="remember";
@@ -57,6 +60,15 @@ public class LoginFragment extends Fragment {
     private EditText mSignUpEmailEditText;
     private Button mLoginSignUpButton;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mCurrentUser=AVUser.getCurrentUser();
+        if(mCurrentUser!=null){
+            //BaseActivity.finishAll();
+            jump();
+        }
+    }
 
     @Nullable
     @Override
@@ -221,6 +233,7 @@ public class LoginFragment extends Fragment {
      * jump跳转到主活动并终结登录相关页面
      */
     private static void jump(){
+        BaseActivity.finishAll();
         MainActivity.actionStart(ArtisanApplication.getContext());
     }
 

@@ -71,25 +71,18 @@
                 android:text="@string/fragment_image_moments"
                 android:textColor="#ff000000"/>
 
-            <android.support.v7.widget.CardView
+
+            <TextView
+                android:id="@+id/fragment_image_publish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="20dp"
-                android:elevation="0dp"
+                android:text="@string/fragment_image_publish"
+                android:textSize="20sp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp">
+                android:layout_marginRight="15dp"
+                android:textColor="#FF000000"/>
 
-                <Button
-                    android:id="@+id/fragment_image_publish"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fragment_image_publish"
-                    android:textSize="20sp"
-                    android:textColor="#fff"
-                    android:background="#FF000000"/>
-
-            </android.support.v7.widget.CardView>
 
             <TextView
                 android:layout_width="match_parent"
@@ -99,8 +92,166 @@
 
         </RelativeLayout>
 
-        
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/fragment_image_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:background="@drawable/edit_box_background"
+                    android:layout_margin="10dp"
+                    android:padding="10dp"
+                    android:hint="@string/fragment_image_edit_text_hint"
+                    android:gravity="start"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/fragment_image_text_limit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/fragment_image_text_limit_zero"
+                    android:textColor="#60000000"
+                    android:textSize="15sp"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/fragment_image_insert_pics"
+                        android:textSize="20sp"/>
+
+                    <TextView
+                        android:id="@+id/fragment_image_limit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_alignParentRight="true"
+                        android:textSize="15sp"
+                        android:text="@string/fragment_image_limit_zero"
+                        android:textColor="#60000000"
+                        android:visibility="gone"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="5dp"
+                    android:background="#aaa"/>
+
+
+                <com.sweetorangejuice.artisan.controller.adapter.GridViewForListView
+                    android:id="@+id/gridView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_title"
+                    android:layout_margin="10dp"
+                    android:background="#ffffff"
+                    android:gravity="left|top"
+                    android:horizontalSpacing="5dp"
+                    android:numColumns="4"
+                    android:padding="5dp"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="5dp" >
+                </com.sweetorangejuice.artisan.controller.adapter.GridViewForListView>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="@string/fragment_image_tag"
+                    android:layout_marginLeft="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="5dp"
+                    android:background="#aaa"/>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/fragment_image_buildings"
+                            android:layout_width="70dp"
+                            android:layout_height="45dp"
+                            android:textSize="20sp"
+                            android:text="@string/fragment_image_buildings"
+                            android:background="@drawable/fragment_unseleted_button"/>
+
+                        <Button
+                            android:id="@+id/fragment_image_drawings"
+                            android:layout_width="70dp"
+                            android:layout_height="45dp"
+                            android:textSize="20sp"
+                            android:text="@string/fragment_image_drawings"
+                            android:background="@drawable/fragment_unseleted_button"
+                            android:layout_marginLeft="5dp"/>
+
+                        <Button
+                            android:id="@+id/fragment_image_handwork"
+                            android:layout_width="70dp"
+                            android:layout_height="45dp"
+                            android:textSize="20sp"
+                            android:text="@string/fragment_image_handwork"
+                            android:background="@drawable/fragment_unseleted_button"
+                            android:layout_marginLeft="5dp"/>
+
+                        <Button
+                            android:id="@+id/fragment_image_sculptures"
+                            android:layout_width="70dp"
+                            android:layout_height="45dp"
+                            android:textSize="20sp"
+                            android:text="@string/fragment_image_sculptures"
+                            android:background="@drawable/fragment_unseleted_button"
+                            android:layout_marginLeft="5dp"/>
+
+                        <Button
+                            android:id="@+id/fragment_image_graphics"
+                            android:layout_width="70dp"
+                            android:layout_height="45dp"
+                            android:textSize="20sp"
+                            android:text="@string/fragment_image_graphics"
+                            android:background="@drawable/fragment_unseleted_button"
+                            android:layout_marginLeft="5dp"/>
+
+
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </LinearLayout>
+
 
 </FrameLayout>

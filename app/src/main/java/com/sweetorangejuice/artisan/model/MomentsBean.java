@@ -1,7 +1,7 @@
 package com.sweetorangejuice.artisan.model;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 /**
  * @author fortuneliu
@@ -14,8 +14,12 @@ import java.util.Date;
 
 public class MomentsBean {
     private String text;                                // 用户输入的文本
-    private ArrayList<String> images;                   // 用户传入的图片地址（最多九个）
+    private List<String> images;                   // 用户传入的图片地址（最多九个）
     private String tag;                                 // 用户选择的标签
+
+    public MomentsBean(){
+        images=new ArrayList<>();
+    }
 
     public void setText(String text){
         this.text = text;
@@ -37,7 +41,7 @@ public class MomentsBean {
         images.remove(index);
     }
 
-    public ArrayList<String> getImages(){
+    public List<String> getImages(){
         return this.images;
     }
 

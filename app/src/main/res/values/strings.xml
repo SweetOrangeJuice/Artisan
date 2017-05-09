@@ -33,4 +33,17 @@
     <string name="fragment_image_select_pics">图片选择</string>
     <string name="fragment_image_moments">动态</string>
     <string name="fragment_image_publish">发布</string>
+    <string name="fragment_image_edit_text_hint">请在这里输入你的文字...</string>
+    <string name="fragment_image_text_limit">%d字/140字</string>
+    <string name="fragment_image_text_limit_zero">0字/140字</string>
+    <string name="fragment_image_insert_pics">插入图片</string>
+    <string name="fragment_image_tag">标签</string>
+    <string name="fragment_image_drawings">插画</string>
+    <string name="fragment_image_buildings">建筑</string>
+    <string name="fragment_image_handwork">手工</string>
+    <string name="fragment_image_sculptures">雕塑</string>
+    <string name="fragment_image_graphics">平面</string>
+    <string name="fragment_image_limit">%d张/9张</string>
+    <string name="fragment_image_limit_zero">0张/9张</string>
+
 </resources>

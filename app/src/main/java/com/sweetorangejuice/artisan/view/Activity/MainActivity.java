@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public static void actionStart(Context context){
         Intent intent=new Intent(context,MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 }

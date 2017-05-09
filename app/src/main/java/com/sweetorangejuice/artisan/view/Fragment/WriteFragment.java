@@ -1,8 +1,5 @@
 package com.sweetorangejuice.artisan.view.Fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,11 +12,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
-import com.sweetorangejuice.artisan.base.ImagesBaseActivity;
 import com.sweetorangejuice.artisan.controller.adapter.AddPhotoGrideViewAdapter;
 import com.sweetorangejuice.artisan.controller.adapter.AddPhotoGrideViewOnItemClickListener;
 import com.sweetorangejuice.artisan.controller.adapter.GridViewForListView;
 import com.sweetorangejuice.artisan.util.TypeChange;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WriteFragment extends Fragment implements OnClickListener {
 	private GridViewForListView mGridView;
@@ -39,7 +38,7 @@ public class WriteFragment extends Fragment implements OnClickListener {
 	}
 
 	public void setGridViewForListView(Context context,
-			GridViewForListView mGridView) {
+									   GridViewForListView mGridView) {
 		this.mGridView = mGridView;
 		this.context = context;
 		dataForGV = new ArrayList<Bitmap>();
@@ -140,5 +139,16 @@ public class WriteFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 
+	}
+	public void clearImage()
+	{
+		listfile.clear();
+		if (adapter != null) {
+			adapter.requestNotifyDataSetChanged(listfile);
+		}
+		if (addPhotoGrideViewOnItemClickListener != null) {
+			addPhotoGrideViewOnItemClickListener
+					.requestNotifyDataSetChanged(listfile, adapter);
+		}
 	}
 }
