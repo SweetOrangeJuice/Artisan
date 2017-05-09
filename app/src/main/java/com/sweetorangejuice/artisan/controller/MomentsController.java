@@ -11,12 +11,11 @@ import com.avos.avoscloud.SaveCallback;
 import com.sweetorangejuice.artisan.base.ArtisanApplication;
 import com.sweetorangejuice.artisan.base.BaseActivity;
 import com.sweetorangejuice.artisan.model.MomentsBean;
+import com.sweetorangejuice.artisan.util.LogUtil;
 import com.sweetorangejuice.artisan.view.Activity.LoginActivity;
 
 import java.io.FileNotFoundException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * @author fortuneliu
@@ -78,6 +77,7 @@ public class MomentsController {
      * @param moments
      * @return
      */
+
     public static void distributeMoments(MomentsBean moments) {
 
         if (checkMoments(moments)) {
@@ -110,7 +110,6 @@ public class MomentsController {
                         imageFiles.add(file);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
-
                     }
                 }
                 AVObject momentsObject = new AVObject("Moments");
