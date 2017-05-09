@@ -209,7 +209,7 @@ public class ImagesFragment extends WriteFragment {
 		}
 	}
 
-	private void clear(){
+	public void clear(){
 		clearImage();
 		mPublishEditText.setText("");
 		isSculpturesButtonPressed=true;
@@ -270,7 +270,7 @@ public class ImagesFragment extends WriteFragment {
 					Log.d("TAG",""+imagesList.size());
 					MomentsController.distributeMoments(momentsBean);
 					Toast.makeText(getActivity(),"发布中...",Toast.LENGTH_SHORT).show();
-
+					clear();
 				}
 			}
 		}
