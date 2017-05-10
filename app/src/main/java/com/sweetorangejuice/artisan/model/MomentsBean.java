@@ -1,5 +1,7 @@
 package com.sweetorangejuice.artisan.model;
 
+import com.avos.avoscloud.AVUser;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +16,30 @@ import java.util.List;
 
 public class MomentsBean {
     private String text;                                // 用户输入的文本
-    private List<String> images;                   // 用户传入的图片地址（最多九个）
+    private List<String> images;                        // 用户传入的图片地址（最多九个）
     private String tag;                                 // 用户选择的标签
+    private String author;                              // 用户名
+    private String createTime;                          // 创建时间
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
 
     public MomentsBean(){
         images=new ArrayList<>();

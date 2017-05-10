@@ -16,17 +16,21 @@ public class FileUtils {
 	private static FileUtils instance;						//FileUtils的实例对象
 	private static final String TAG = "FileUtils";			//用于输出错误的标签
 
-	private static String sdRootPath = Environment			//获得sd卡的根目录
-			.getExternalStorageDirectory().getPath();
-	private static String dataRootPath = null;				//手机的缓存根目录
+	private static String sdAppDataPath = null;			//sd卡的应用数据目录
+	private static String sdAppCachePath = null;		//sd卡的应用缓存目录
+	private static String appDataPath = null;			//手机上的应用数据目录
+	private static String appCachePath = null;			//手机上的应用缓存目录
 
-	private final static String FOLDER_NAME = "/AndroidImage";		//保存Image的目录名
-	private final static String IMAGE_FILES = "/RijiUserImage";		//保存用户手动保存的Image的目录名
-	private final static String FILE_NAME = "/RiJiFile";			//保存文件的目录名
-	private final static String uploadPhotosFile = "/UploadPhotos";	//保存上传的图片的目录名
+	private final static String IMAGE_FOLDER = "/ArtisanImage";			//保存Image的目录名
+	private final static String USER_IMAGE_FOLDER = "/UserImage";		//保存用户手动保存的Image的目录名
+	private final static String USER_FILE_FOLDER = "/UserFile";			//保存文件的目录名
+	private final static String UPLOAD_IMAGE_FOLDER = "/UploadImage";	//保存上传的图片的目录名
 
 	public FileUtils(Context context) {
-		dataRootPath = context.getCacheDir().getPath();		//获取缓存根目录
+		sdAppDataPath = context.getExternalFilesDir(null).getPath();	//获取sd卡上的应用数据目录
+		sdAppCachePath = context.getExternalCacheDir().getPath();		//获取sd卡上的应用缓存目录
+		appDataPath = context.getFilesDir().getPath();					//获取手机上的应用数据目录
+		appCachePath = context.getCacheDir().getPath();					//获取手机上的应用缓存目录
 	}
 
 	public static FileUtils getInstance(Context context) {
@@ -37,24 +41,33 @@ public class FileUtils {
 	}
 
 	/**
-	 * 获取手机根目录，若有SD卡就是SD卡根目录，否则为手机缓存目录
+	 * 获取手机缓存目录，若有SD卡就是SD卡缓存目录，否则为手机缓存目录
 	 * 
 	 * @return
 	 */
-	public String getRootDirectory() {
+	public String getCacheDirectory() {
 		return Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED) ? sdRootPath : dataRootPath;
+				Environment.MEDIA_MOUNTED) ? sdAppCachePath : appCachePath;
+	}
+
+	/**
+	 * 获取手机文件目录，若有SD卡就是SD卡文件目录，否则为手机文件目录
+	 *
+	 * @return
+	 */
+	public String getFilesDirectory(){
+		return Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED) ? sdAppDataPath : appDataPath;
 	}
 
 	/**
 	 * 获取储存Image的目录
-	 * 
 	 * @return
 	 */
 	public String getStorageDirectory() {
 		return Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED) ? sdRootPath + FOLDER_NAME
-				: dataRootPath + FOLDER_NAME;
+				Environment.MEDIA_MOUNTED) ? sdAppCachePath + IMAGE_FOLDER
+				: appCachePath + IMAGE_FOLDER;
 	}
 
 	/**
@@ -64,8 +77,8 @@ public class FileUtils {
 	 */
 	public String getImageDirectory() {
 		return Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED) ? sdRootPath + IMAGE_FILES
-				: dataRootPath + IMAGE_FILES;
+				Environment.MEDIA_MOUNTED) ? sdAppCachePath + USER_IMAGE_FOLDER
+				: appCachePath + USER_IMAGE_FOLDER;
 	}
 
 	/**
@@ -75,8 +88,8 @@ public class FileUtils {
 	 */
 	public String getFileDirectory() {
 		return Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED) ? sdRootPath + FILE_NAME
-				: dataRootPath + FILE_NAME;
+				Environment.MEDIA_MOUNTED) ? sdAppCachePath + USER_FILE_FOLDER
+				: appCachePath + USER_FILE_FOLDER;
 	}
 
 	/**
@@ -86,8 +99,8 @@ public class FileUtils {
 	 */
 	public String getUpPhotosFileDirectory() {
 		return Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED) ? sdRootPath + uploadPhotosFile
-				: dataRootPath + uploadPhotosFile;
+				Environment.MEDIA_MOUNTED) ? sdAppCachePath + UPLOAD_IMAGE_FOLDER
+				: appCachePath + UPLOAD_IMAGE_FOLDER;
 	}
 
 	/**
@@ -97,7 +110,7 @@ public class FileUtils {
 	 */
 	public String getRecordFileDirectory() {
 		return Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED) ? sdRootPath : dataRootPath;
+				Environment.MEDIA_MOUNTED) ? sdAppCachePath : appCachePath;
 	}
 
 	/**
@@ -135,7 +148,7 @@ public class FileUtils {
 	 * @param bitmap
 	 * @throws IOException
 	 */
-	public void savaBitmap(String fileName, Bitmap bitmap) {
+	public void saveBitmap(String fileName, Bitmap bitmap) {
 		if (bitmap == null) {
 			return;
 		}
@@ -156,10 +169,10 @@ public class FileUtils {
 			fos.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			Log.i(TAG, "savaBitmap() has FileNotFoundException");
+			Log.i(TAG, "saveBitmap() has FileNotFoundException");
 		} catch (IOException e) {
 			e.printStackTrace();
-			Log.i(TAG, "savaBitmap() has IOException");
+			Log.i(TAG, "saveBitmap() has IOException");
 		}
 	}
 
@@ -168,7 +181,7 @@ public class FileUtils {
 	 * 
 	 * @param bitmap
 	 */
-	public String savaImage(String fileName, Bitmap bitmap) {
+	public String saveImage(String fileName, Bitmap bitmap) {
 		fileName = fileName.replaceAll("[^\\w]", "");
 		if (bitmap == null) {
 			return null;
@@ -192,12 +205,11 @@ public class FileUtils {
 			result = file.getAbsolutePath();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			Log.i(TAG, "savaImage() has FileNotFoundException");
+			Log.i(TAG, "saveImage() has FileNotFoundException");
 		} catch (IOException e) {
 			e.printStackTrace();
-			Log.i(TAG, "savaImage() has IOException");
+			Log.i(TAG, "saveImage() has IOException");
 		}
-
 		return result;
 	}
 
@@ -280,7 +292,7 @@ public class FileUtils {
 	 * @return 返回的是创建的文件夹的地址
 	 */
 	public String createFiles(String filesName) {
-		File files = new File(getRootDirectory() + File.separator + filesName);
+		File files = new File(getCacheDirectory() + File.separator + filesName);
 		if (!files.exists()) {
 			files.mkdirs();
 		}

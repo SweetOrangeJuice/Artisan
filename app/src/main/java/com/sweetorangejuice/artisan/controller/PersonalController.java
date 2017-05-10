@@ -9,6 +9,7 @@ import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.sweetorangejuice.artisan.base.ArtisanApplication;
 import com.sweetorangejuice.artisan.base.BaseActivity;
+import com.sweetorangejuice.artisan.base.GlobalVariable;
 import com.sweetorangejuice.artisan.model.MomentsBean;
 import com.sweetorangejuice.artisan.model.PersonalBean;
 import com.sweetorangejuice.artisan.util.LogUtil;
@@ -38,24 +39,24 @@ public class PersonalController {
 
     /**
      * 用户在注册的时候生成相应个人资料表
-     * @param objectId
+     * @param username
      */
-    public static void createPersonalInfo(String objectId){
-        AVObject personalObject = new AVObject("person");
-        personalObject.put("User", objectId);
-        try {
-            personalObject.save();
-        }catch(AVException e){
-            if(e==null){
-            /**
-             * 这里写成功的回调
-             */
-            }else{
-                /**
-                 * 这里写失败的回调
-                 */
+    public static void createPersonalInfo(String username){
+        AVObject personalObject = new AVObject("Person");
+        personalObject.put("username", username);
+        LoginController.currentInfo = personalObject;
+        personalObject.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(AVException e) {
+                LoginController.taskFinished += 1;
+                if(e == null) {
+                    LoginController.checkState();
+                }else{
+                    LoginController.SignUpState = LoginController.State.FAILED;
+                    LoginController.checkState();
+                }
             }
-        }
+        });
     }
 
     /**
@@ -63,8 +64,8 @@ public class PersonalController {
      * @return
      */
     public static AVObject showPersonalInfo() {
-        AVQuery<AVObject> avQuery = new AVQuery<>("person");
-        avQuery.whereEqualTo("user", AVUser.getCurrentUser().getObjectId());
+        AVQuery<AVObject> avQuery = new AVQuery<>("Person");
+        avQuery.whereEqualTo("username", GlobalVariable.username);
         AVObject personalObject = null;
         try {
             personalObject = avQuery.getFirst();
@@ -118,24 +119,37 @@ public class PersonalController {
             LogUtil.d("MomentsController", "Distribute Failed.");
         }
     }
-    public static ArrayList<MomentsBean> getMyMoments(int limit,int skip)
+
+    /**
+     * 我的发布
+     *      返回对应数量的朋友圈列表
+     * @param limit 当前需要获取的朋友圈数量
+     * @param skip  跳过前方多少个朋友圈
+     * @return
+     */
+    public static ArrayList<String> getMyMoments(int limit,int skip)
     {
-        AVQuery<AVObject> query = new AVQuery<>("Todo");
-        query.whereEqualTo("author",AVUser.getCurrentUser().getObjectId());
+        AVQuery<AVObject> query = new AVQuery<>("Moments");
+        query.whereEqualTo("author",GlobalVariable.username);
         query.limit(limit);
         query.skip(skip);
         query.addDescendingOrder("createdAt");
-        List<AVObject> result = null;
+        List<AVObject> temp;
+        ArrayList<String> result = new ArrayList<>();
         try {
-            result =  query.find();
+            temp =  query.find();
+            for(AVObject moment:temp){
+                result.add(moment.getObjectId());
+            }
         }catch(AVException e){
-
+            e.printStackTrace();
         }
-        return (ArrayList)result;
+        return result;
     }
+
     public static void putCollection(String objectId){
-        AVObject collectionObject = new AVObject("collection");
-        collectionObject.put("user",AVUser.getCurrentUser().getObjectId());
+        AVObject collectionObject = new AVObject("Collection");
+        collectionObject.put("username",GlobalVariable.username);
         collectionObject.put("moments",objectId);
         try {
             collectionObject.save();
