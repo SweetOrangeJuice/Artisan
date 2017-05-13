@@ -52,5 +52,7 @@
     <string name="time_sort">按时间排序</string>
     <string name="hot_sort">按热度排序</string>
     <string name="collect_sort">按收藏排序</string>
+    <string name="fragment_detail_comment">发表评论</string>
+    <string name="fragment_detail_list">评论列表</string>
 
 </resources>

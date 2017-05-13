@@ -39,7 +39,10 @@
         <activity android:name=".base.BaseActivity">
         </activity>
         <activity android:name=".view.Activity.SubPlazaActivity">
-
+        </activity>
+        <activity android:name=".view.Activity.DetailActivity">
+        </activity>
+        <activity android:name=".view.Activity.OriginImageActivity">
         </activity>
 
         <provider

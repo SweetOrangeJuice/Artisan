@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.sweetorangejuice.artisan.R;
 import com.sweetorangejuice.artisan.base.ArtisanApplication;
 import com.sweetorangejuice.artisan.model.MomentForItem;
+import com.sweetorangejuice.artisan.view.Activity.OriginImageActivity;
 
 import java.util.List;
 
@@ -131,10 +132,11 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.ViewHolder
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.moment_item,parent,false);
         final ViewHolder holder=new ViewHolder(view);
+
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,7 +161,7 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.ViewHolder
                     holder.mLike.setBackgroundResource(R.drawable.fragment_unseleted_button);
                     holder.mIsLike=false;
                     //TODO:此处待添加后台减少动态的点赞数
-                    MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
+
                 }
             }
         });
@@ -170,17 +172,85 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.ViewHolder
                     holder.mCollect.setBackgroundResource(R.drawable.fragment_seleted_button);
                     holder.mIsCollect=true;
                     //TODO:此处待添加后台增加动态的点赞数
-                    MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
+
                 }else{
                     holder.mCollect.setBackgroundResource(R.drawable.fragment_unseleted_button);
                     holder.mIsCollect=false;
                     //TODO:此处待添加后台减少动态的点赞数
-                    MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
+
                 }
             }
         });
-
-        //TODO:以下的图片待添加点击查看大图事件
+        holder.mBigImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
+                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList().get(0));
+            }
+        });
+        holder.mImg1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
+                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList().get(0));
+            }
+        });
+        holder.mImg2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
+                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList().get(1));
+            }
+        });
+        holder.mImg3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
+                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList().get(2));
+            }
+        });
+        holder.mImg4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
+                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList().get(3));
+            }
+        });
+        holder.mImg5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
+                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList().get(4));
+            }
+        });
+        holder.mImg6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
+                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList().get(5));
+            }
+        });
+        holder.mImg7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
+                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList().get(6));
+            }
+        });
+        holder.mImg8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
+                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList().get(7));
+            }
+        });
+        holder.mImg9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
+                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList().get(8));
+            }
+        });
 
         return holder;
     }
