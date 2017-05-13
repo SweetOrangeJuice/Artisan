@@ -3,6 +3,7 @@ package com.sweetorangejuice.artisan.view.Fragment;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -38,6 +39,8 @@ public class SubPlazaFragment extends Fragment {
 
     private SubPlazaActivity.CategoryCode mCategoryCode;
 
+    private MomentAdapter mAdapter;
+
     private TextView mTitleTextView;
     private ImageView mBackImageView;
     private ImageView mSearchImageView;
@@ -46,7 +49,7 @@ public class SubPlazaFragment extends Fragment {
     private Button mCollectButton;
     private RecyclerView mRecyclerView;
 
-    private List<MomentForItem> mMomentForItems;
+    private List<MomentForItem> mMomentForItems=new ArrayList<>();
 
     public static Fragment newInstance(SubPlazaActivity.CategoryCode categoryCode){
         Bundle args=new Bundle();
@@ -104,30 +107,10 @@ public class SubPlazaFragment extends Fragment {
         mCollectButton=(Button)view.findViewById(R.id.collect_sort);
         mRecyclerView=(RecyclerView)view.findViewById(R.id.fragment_sub_plaza_recycler_view);
 
-        switch (mCategoryCode){
-            case BUILDING:mTitleTextView.setText(R.string.fragment_image_buildings);
-                mMomentForItems=queryByCategory("buildings");
-                break;
-            case DRAWING:mTitleTextView.setText(R.string.fragment_image_drawings);
-                mMomentForItems=queryByCategory("drawings");
-                break;
-            case HANDWORK:mTitleTextView.setText(R.string.fragment_image_handwork);
-                mMomentForItems=queryByCategory("handwork");
-                break;
-            case SCULPTURE:mTitleTextView.setText(R.string.fragment_image_sculptures);
-                mMomentForItems=queryByCategory("sculptures");
-                break;
-            case GRAPHIC:mTitleTextView.setText(R.string.fragment_image_graphics);
-                mMomentForItems=queryByCategory("graphics");
-                break;
-            default:
-                break;
-        }
-
         LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
-        final MomentAdapter adapter=new MomentAdapter(mMomentForItems);
-        mRecyclerView.setAdapter(adapter);
+        mAdapter=new MomentAdapter(mMomentForItems);
+        mRecyclerView.setAdapter(mAdapter);
         mBackImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,33 +118,77 @@ public class SubPlazaFragment extends Fragment {
             }
         });
 
+        switch (mCategoryCode){
+            case BUILDING:mTitleTextView.setText(R.string.fragment_image_buildings);
+                queryByCategory("buildings");
+                break;
+            case DRAWING:mTitleTextView.setText(R.string.fragment_image_drawings);
+                queryByCategory("drawings");
+                break;
+            case HANDWORK:mTitleTextView.setText(R.string.fragment_image_handwork);
+                queryByCategory("handwork");
+                break;
+            case SCULPTURE:mTitleTextView.setText(R.string.fragment_image_sculptures);
+                queryByCategory("sculptures");
+                break;
+            case GRAPHIC:mTitleTextView.setText(R.string.fragment_image_graphics);
+                queryByCategory("graphics");
+                break;
+            default:
+                break;
+        }
+
         return view;
     }
 
-    private List<MomentForItem> queryByCategory(String category){
-        MomentsBean momentsBean;
-        List<String> objectIds=PlazaController.getPlazaMoments(category,"createdAt",100,0);
-        List<MomentForItem> momentForItems=new ArrayList<>();
-        for(int i=0;i<objectIds.size();i++){
-            momentsBean= MomentsController.getMomentByObjectId(objectIds.get(i));
-            MomentForItem momentForItem=new MomentForItem();
-            momentForItem.setAccount(momentsBean.getAuthor());
-            momentForItem.setContent(momentsBean.getText());
-            List<String> images=momentsBean.getImages();
-            for(int j=0;j<images.size();j++){
-                byte[] image=FileController.getPicturebyObjectId(images.get(j));
-                momentForItem.getImagesList().add(image);
+    private void queryByCategory(String category){
+        AsyncTask<String,Integer,Integer> task=new AsyncTask<String, Integer, Integer>() {
+
+            @Override
+            protected void onPostExecute(Integer integer) {
+                super.onPostExecute(integer);
+                mAdapter.notifyDataSetChanged();
             }
 
-            //以下为暂时替代的头像
-            Resources resources=getResources();
-            Bitmap bitmap= BitmapFactory.decodeResource(resources,R.drawable.head_portrait);
-            ByteArrayOutputStream out=new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG,100,out);
-            momentForItem.setHeadPortrait(out.toByteArray());
-        }
+            @Override
+            protected Integer doInBackground(String... params) {
 
-        return momentForItems;
+                MomentsBean momentsBean;
+                List<String> objectIds= PlazaController.getPlazaMoments(params[0],"createdAt",100,0);
+                List<MomentForItem> momentForItems=new ArrayList<>();
+                for(int i=0;i<objectIds.size();i++){
+                    momentsBean= MomentsController.getMomentByObjectId(objectIds.get(i));
+                    MomentForItem momentForItem=new MomentForItem();
+                    momentForItem.setAccount(momentsBean.getAuthor());
+                    momentForItem.setContent(momentsBean.getText());
+                    List<String> images=momentsBean.getImages();
+                    for(int j=0;j<images.size();j++){
+                        String img_obj_id=images.get(j);
+                        byte[] image= FileController.getThumbnailbyObjectId(img_obj_id,150,150);
+                        byte[] image_1=FileController.getPicturebyObjectId(img_obj_id);
+                        momentForItem.getImagesList().add(image);
+                        momentForItem.getImagesList_1().add(image_1);   //原图
+                    }
+
+                    //以下为暂时替代的头像
+                    Resources resources=getResources();
+                    Bitmap bitmap= BitmapFactory.decodeResource(resources,R.drawable.head_portrait);
+                    ByteArrayOutputStream out=new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG,100,out);
+                    momentForItem.setHeadPortrait(out.toByteArray());
+
+                    momentForItems.add(momentForItem);
+                }
+                mMomentForItems.clear();
+
+                for(int i=0;i<momentForItems.size();i++){
+                    mMomentForItems.add(momentForItems.get(i));
+                }
+
+                return 100;
+            }
+        }.execute(category);
+
     }
 
 }

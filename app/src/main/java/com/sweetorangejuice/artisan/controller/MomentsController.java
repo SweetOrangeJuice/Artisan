@@ -1,5 +1,6 @@
 package com.sweetorangejuice.artisan.controller;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
@@ -16,6 +17,8 @@ import com.sweetorangejuice.artisan.view.Activity.LoginActivity;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author fortuneliu
@@ -46,7 +49,7 @@ public class MomentsController {
      *      如果发送成功，则执行成功的代码
      *      如果发送不成功，则在云端删除已经上传的内容
      */
-    public static void checkState()
+    public static void checkState(final MomentsBean moments, final List<String> objectIds)
     {
         if(taskCount == taskFinished) {     //当所有任务都完成时
             taskCount = 0;                  //任务记录数清零
@@ -60,6 +63,30 @@ public class MomentsController {
                  LogUtil.d("MomentsController","Distribute Moments Succeed.");
                 //Todo:这里写发布成功的代码
             }
+        }else if(taskCount==taskFinished+1){
+            AVObject momentsObject = new AVObject("Moments");           //建立朋友圈对象
+            momentsObject.put("tag", moments.getTag());                 //标签
+            momentsObject.put("author", GlobalVariable.username);       //作者
+            momentsObject.put("images",objectIds);
+            //momentsObject.put("images", imageFiles);                    //图片列表
+            momentsObject.put("text", moments.getText());               //文字内容
+            //currentFiles = imageFiles;                                  //当前的图片列表
+            currentMoments = momentsObject;                             //当前发送的朋友圈
+
+            momentsObject.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(AVException e) {
+                    taskFinished += 1;                                  //已完成任务数+1
+                    if (e == null) {
+                        checkState(moments,objectIds);                   //发送成功，默认检查状态
+                        LogUtil.d("MomentsController", "Momenets AVObject Succeed.");
+                    } else {
+                        MomentsController.momentsState = State.FAILED;
+                        checkState(moments,objectIds);                   //发送失败，默认检查状态
+                        LogUtil.d("MomentsController", "Moments AVObject Failed.");
+                    }
+                }
+            });
         }
     }
 
@@ -102,29 +129,33 @@ public class MomentsController {
      * @return
      */
 
-    public static void distributeMoments(MomentsBean moments) {
+    public static void distributeMoments(final MomentsBean moments) {
         taskCount = (moments.getImages()).size()+1;     //初始化异步任务数
         if (checkMoments(moments)) {                    //当朋友圈内容无误时
             int count = 0;                              //建立一个AVFile图片列表
             ArrayList<AVFile> imageFiles = new ArrayList<>();
+            final List<String> objectIds=new ArrayList<>();
             for (String path : moments.getImages()) {   //将每一个图片上传至云端
                 try {
                     String[] temp = path.split("/");    //获得图片的名称和类型
                     String fileName = temp[temp.length - 1];
                     String[] temp1 = fileName.split("\\.");
-                    AVFile file = AVFile.withAbsoluteLocalPath((count++) + "." + temp1[1], path);
+                    final AVFile file = AVFile.withAbsoluteLocalPath((count++) + "." + temp1[1], path);
                     imageFiles.add(file);               //将文件添加到列表中
                     file.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(AVException e) {
                             MomentsController.taskFinished += 1;        //当完成操作时，已完成任务数+1
                             if (e == null) {                            //当该上传操作成功时
-                                checkState();                           //因为不知道是不是最后一个完成，因此默认执行checkState();
+                                objectIds.add(file.getObjectId());
+                                Log.d("TAG",""+file.getObjectId());
+                                Log.d("TAG",""+objectIds.toString());
+                                checkState(moments,objectIds);                           //因为不知道是不是最后一个完成，因此默认执行checkState();
                             } else {
                                 MomentsController.momentsState = State.FAILED;     //设置momentsState为Failed
                                 //TODO:failed
                                 Toast.makeText(ArtisanApplication.getContext(), "当前网络不佳，请稍候重试", Toast.LENGTH_SHORT).show();
-                                checkState();                           //因为不知道是不是最后一个完成，因此默认执行checkState();
+                                checkState(moments,objectIds);                           //因为不知道是不是最后一个完成，因此默认执行checkState();
                             }
                         }
                     });
@@ -133,12 +164,14 @@ public class MomentsController {
                     e.printStackTrace();                                //打印错误栈
                 }
             }
+
+            /*
             AVObject momentsObject = new AVObject("Moments");           //建立朋友圈对象
             momentsObject.put("tag", moments.getTag());                 //标签
             momentsObject.put("author", GlobalVariable.username);       //作者
-            momentsObject.put("images", imageFiles);                    //图片列表
+            momentsObject.put("images",objectIds);
+            //momentsObject.put("images", imageFiles);                    //图片列表
             momentsObject.put("text", moments.getText());               //文字内容
-
             currentFiles = imageFiles;                                  //当前的图片列表
             currentMoments = momentsObject;                             //当前发送的朋友圈
 
@@ -156,7 +189,7 @@ public class MomentsController {
                     }
                 }
             });
-
+            */
         }
     }
     public static MomentsBean getMomentByObjectId(String objectId)
@@ -166,10 +199,17 @@ public class MomentsController {
         try{
             AVObject object = query.get(objectId);
             moment.setAuthor((String)object.get("author"));
-            moment.setCreateTime((String)object.get("createdAt"));
+            moment.setCreateTime((Date)object.get("createdAt"));
             moment.setText((String)object.get("text"));
             moment.setTag((String)object.get("text"));
-            ArrayList<String> imagesList = (ArrayList<String>) object.get("images");
+            //List<String> imagesList = (ArrayList<String>) object.get("images");
+            List<String> imagesList=new ArrayList<>();
+            List<String> objects=(ArrayList<String>)object.get("images");
+            for(int i=0;i<objects.size();i++){
+                imagesList.add((String)objects.get(i));
+                //imagesList.add((String)objects.get(i));
+            }
+
             moment.setImages(imagesList);
         }catch(AVException e){
 

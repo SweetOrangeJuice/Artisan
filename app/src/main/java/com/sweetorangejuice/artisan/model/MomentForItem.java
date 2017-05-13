@@ -13,9 +13,11 @@ public class MomentForItem {
     private String mAccount;
     private String mContent;
     private List<byte[]> mImagesList;
+    private List<byte[]> mImagesList_1;
 
     public MomentForItem(){
         mImagesList=new ArrayList<>();
+        mImagesList_1=new ArrayList<>();
     }
 
     public byte[] getHeadPortrait() {
@@ -48,5 +50,13 @@ public class MomentForItem {
 
     public void setImagesList(List<byte[]> imagesList) {
         mImagesList = imagesList;
+    }
+
+    public List<byte[]> getImagesList_1() {
+        return mImagesList_1;
+    }
+
+    public void setImagesList_1(List<byte[]> imagesList_1) {
+        mImagesList_1 = imagesList_1;
     }
 }

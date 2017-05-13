@@ -2,8 +2,6 @@ package com.sweetorangejuice.artisan.controller;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.AVQuery;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;

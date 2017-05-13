@@ -156,7 +156,6 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.ViewHolder
                     holder.mLike.setBackgroundResource(R.drawable.fragment_seleted_button);
                     holder.mIsLike=true;
                     //TODO:此处待添加后台增加动态的点赞数
-                    MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
                 }else{
                     holder.mLike.setBackgroundResource(R.drawable.fragment_unseleted_button);
                     holder.mIsLike=false;
@@ -185,70 +184,70 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
-                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList().get(0));
+                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList_1().get(0));
             }
         });
         holder.mImg1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
-                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList().get(0));
+                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList_1().get(0));
             }
         });
         holder.mImg2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
-                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList().get(1));
+                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList_1().get(1));
             }
         });
         holder.mImg3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
-                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList().get(2));
+                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList_1().get(2));
             }
         });
         holder.mImg4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
-                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList().get(3));
+                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList_1().get(3));
             }
         });
         holder.mImg5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
-                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList().get(4));
+                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList_1().get(4));
             }
         });
         holder.mImg6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
-                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList().get(5));
+                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList_1().get(5));
             }
         });
         holder.mImg7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
-                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList().get(6));
+                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList_1().get(6));
             }
         });
         holder.mImg8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
-                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList().get(7));
+                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList_1().get(7));
             }
         });
         holder.mImg9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
-                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList().get(8));
+                OriginImageActivity.actionStart(parent.getContext(),momentForItem.getImagesList_1().get(8));
             }
         });
 

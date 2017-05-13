@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.avos.avoscloud.AVOSCloud;
+import com.avos.avoscloud.AVUser;
 
 /**
  * @author fortuneliu,liyizhan
@@ -34,6 +35,13 @@ public class ArtisanApplication extends Application {
 
         //获取整个应用程序中的context
         sContext=getApplicationContext();
+
+        AVUser mCurrentUser=AVUser.getCurrentUser();
+        if(mCurrentUser!=null){
+            GlobalVariable.username=mCurrentUser.getUsername();
+        }else{
+            GlobalVariable.username=null;
+        }
     }
 
     //获取整个应用程序中的context

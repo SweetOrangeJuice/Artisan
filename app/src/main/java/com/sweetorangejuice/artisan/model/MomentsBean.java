@@ -1,8 +1,7 @@
 package com.sweetorangejuice.artisan.model;
 
-import com.avos.avoscloud.AVUser;
-
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,7 +18,7 @@ public class MomentsBean {
     private List<String> images;                        // 用户传入的图片地址（最多九个）
     private String tag;                                 // 用户选择的标签
     private String author;                              // 用户名
-    private String createTime;                          // 创建时间
+    private Date createTime;                          // 创建时间
 
     public void setImages(List<String> images) {
         this.images = images;
@@ -33,11 +32,11 @@ public class MomentsBean {
         this.author = author;
     }
 
-    public String getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
