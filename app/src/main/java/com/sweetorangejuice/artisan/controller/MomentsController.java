@@ -180,4 +180,49 @@ public class MomentsController {
         BaseActivity.finishAll();
         LoginActivity.startAction(ArtisanApplication.getContext());
     }
+
+    public static void like(String username,String momentsId){
+        AVObject likeObject = new AVObject("Like");
+        likeObject.put("username",username);
+        likeObject.put("momentsId",momentsId);
+        likeObject.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(AVException e) {
+                //在此处写点赞成功的代码
+            }
+        });
+    }
+
+    public static void dislike(String username,String momentsId){
+        //在这里写取消点赞的代码
+    }
+
+    public static void collection(String username,String momentsId){
+        AVObject likeObject = new AVObject("Collection");
+        likeObject.put("username",username);
+        likeObject.put("momentsId",momentsId);
+        likeObject.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(AVException e) {
+                //在此处写收藏成功的代码
+            }
+        });
+    }
+
+    public static void disCollection(String username,String momentsId){
+        //在这里写取消收藏的代码
+    }
+
+    public static void Comments(String username,String momentsId,String content){
+        AVObject CommentsObject = new AVObject("Comments");
+        CommentsObject.put("username",username);
+        CommentsObject.put("momentsId",momentsId);
+        CommentsObject.put("Content",content);
+        CommentsObject.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(AVException e) {
+                //在此处发送评论成功的代码
+            }
+        });
+    }
 }
