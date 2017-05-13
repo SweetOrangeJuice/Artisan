@@ -45,5 +45,12 @@
     <string name="fragment_image_graphics">平面</string>
     <string name="fragment_image_limit">%d张/9张</string>
     <string name="fragment_image_limit_zero">0张/9张</string>
+    <string name="fragment_plaza_category">广场</string>
+    <string name="like">赞</string>
+    <string name="collect">收藏</string>
+    <string name="comment">评论</string>
+    <string name="time_sort">按时间排序</string>
+    <string name="hot_sort">按热度排序</string>
+    <string name="collect_sort">按收藏排序</string>
 
 </resources>

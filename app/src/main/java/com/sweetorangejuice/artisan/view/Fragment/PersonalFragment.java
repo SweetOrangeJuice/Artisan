@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.avos.avoscloud.AVUser;
 import com.sweetorangejuice.artisan.R;
 import com.sweetorangejuice.artisan.controller.PersonalController;
+import com.sweetorangejuice.artisan.view.Activity.PersonalActivity;
 
 /**
  * Created by as on 2017/5/3.
@@ -65,6 +66,12 @@ public class PersonalFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 PersonalController.logOut(mCurrentUser);
+            }
+        });
+        mProfilesLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PersonalActivity.startAction(getActivity());
             }
         });
 
