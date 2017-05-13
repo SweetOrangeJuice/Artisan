@@ -5,18 +5,15 @@ import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.sweetorangejuice.artisan.base.ArtisanApplication;
 import com.sweetorangejuice.artisan.base.BaseActivity;
 import com.sweetorangejuice.artisan.base.GlobalVariable;
-import com.sweetorangejuice.artisan.model.MomentsBean;
 import com.sweetorangejuice.artisan.model.PersonalBean;
 import com.sweetorangejuice.artisan.util.LogUtil;
 import com.sweetorangejuice.artisan.view.Activity.LoginActivity;
 
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +49,7 @@ public class PersonalController {
                 if(e == null) {
                     LoginController.checkState();
                 }else{
+                    LogUtil.d("LoginController","info failed");
                     LoginController.SignUpState = LoginController.State.FAILED;
                     LoginController.checkState();
                 }

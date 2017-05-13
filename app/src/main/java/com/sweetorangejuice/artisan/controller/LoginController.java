@@ -1,7 +1,6 @@
 package com.sweetorangejuice.artisan.controller;
 
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.LogInCallback;
@@ -9,8 +8,6 @@ import com.avos.avoscloud.SignUpCallback;
 import com.sweetorangejuice.artisan.base.GlobalVariable;
 import com.sweetorangejuice.artisan.util.LogUtil;
 import com.sweetorangejuice.artisan.view.Fragment.LoginFragment;
-
-import java.util.ArrayList;
 
 /**
  * @author fortuneliu
@@ -47,15 +44,15 @@ public class LoginController {
         if(taskCount == taskFinished) {     //当所有任务都完成时
             taskCount = 0;                  //任务记录数清零
             taskFinished = 0;               //任务完成数清零
-            if (SignUpState != State.OK) {        //当朋友圈发布不成功时
-                LogUtil.d("MomentsController","Distribute Moments Failed.");
+            if (SignUpState != State.OK) {        //当注册不成功时
+                LogUtil.d("MomentsController","Sign up Failed.");
                 drawBack();                 //执行远端删除操作
                 SignUpState = State.OK;
                 LogUtil.d("LoginController", "注册失败");
                 //Todo:这里写发布不成功的代码
                 LoginFragment.onSignUpFailed();// 注册失败
-            }else{                          //当朋友圈发布成功时
-                LogUtil.d("MomentsController","Distribute Moments Succeed.");
+            }else{                          //当注册成功时
+                LogUtil.d("MomentsController","Sign up Succeed.");
                 //Todo:这里写发布成功的代码
                 LoginFragment.onSignUpSucceed();// 注册成功
                 LogUtil.d("LoginController", "注册成功");
@@ -97,6 +94,7 @@ public class LoginController {
                 if (e == null) {
                     checkState();
                 } else {
+                    LogUtil.d("LoginController","user failed");
                     SignUpState = State.FAILED;
                     checkState();
                     e.printStackTrace();
@@ -133,6 +131,8 @@ public class LoginController {
     public static void LogOut(){
         AVUser.getCurrentUser().logOut();
         GlobalVariable.username = null;
+        currentInfo = null;
+        currentUser = null;
     }
 
 }

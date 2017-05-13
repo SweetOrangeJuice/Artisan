@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/head_portrait"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/head_portrait"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/head_portrait"
+        tools:text="sb"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/head_portrait"
+        android:layout_below="@id/account"
+        tools:text="今天，我要写下第一条动态，测试一下这个子项。话说回来这个东西好好玩啊。"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"/>
+
+    <FrameLayout
+        android:id="@+id/canvas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/content">
+
+        <RelativeLayout
+            android:id="@+id/image_canvas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/big_image"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginLeft="80dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/images_canvas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/img_1"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="80dp"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/img_2"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/img_1"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/img_3"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/img_2"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/img_4"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="80dp"
+                android:layout_below="@id/img_1"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/img_5"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/img_4"
+                android:layout_below="@id/img_2"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/img_6"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/img_5"
+                android:layout_below="@id/img_3"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/img_7"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="80dp"
+                android:layout_below="@id/img_4"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/img_8"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/img_7"
+                android:layout_below="@id/img_5"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/img_9"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/img_8"
+                android:layout_below="@id/img_6"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/collect"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_below="@id/canvas"
+        android:textSize="17sp"
+        android:background="@drawable/fragment_unseleted_button"
+        android:text="@string/collect"/>
+
+    <TextView
+        android:id="@+id/like"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_toLeftOf="@id/collect"
+        android:layout_marginRight="20dp"
+        android:layout_below="@id/canvas"
+        android:textSize="17sp"
+        android:background="@drawable/fragment_unseleted_button"
+        android:text="@string/like"/>
+
+
+    <TextView
+        android:id="@+id/comment"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_toLeftOf="@id/like"
+        android:layout_marginRight="20dp"
+        android:layout_below="@id/canvas"
+        android:textSize="17sp"
+        android:background="@drawable/fragment_unseleted_button"
+        android:text="@string/comment"/>
+
+</RelativeLayout>
