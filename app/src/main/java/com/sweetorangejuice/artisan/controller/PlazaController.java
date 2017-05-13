@@ -3,7 +3,6 @@ package com.sweetorangejuice.artisan.controller;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
-import com.sweetorangejuice.artisan.base.GlobalVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,7 @@ public class PlazaController{
      * @param skip     已经显示的数量
      * @return
      */
-    public static ArrayList<String> getPlazaMoments(String category,String orderBy,int limit, int skip)
+    public static List<String> getPlazaMoments(String category,String orderBy,int limit, int skip)
     {
         AVQuery<AVObject> query = new AVQuery<>("Moments");
         query.whereEqualTo("tag",category);
@@ -29,7 +28,7 @@ public class PlazaController{
         query.skip(skip);
         query.addDescendingOrder(orderBy);
         List<AVObject> temp;
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         try {
             temp =  query.find();
             for(AVObject moment:temp){

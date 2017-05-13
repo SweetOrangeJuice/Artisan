@@ -16,8 +16,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sweetorangejuice.artisan.R;
+import com.sweetorangejuice.artisan.controller.FileController;
+import com.sweetorangejuice.artisan.controller.MomentsController;
+import com.sweetorangejuice.artisan.controller.PlazaController;
 import com.sweetorangejuice.artisan.controller.adapter.MomentAdapter;
 import com.sweetorangejuice.artisan.model.MomentForItem;
+import com.sweetorangejuice.artisan.model.MomentsBean;
 import com.sweetorangejuice.artisan.view.Activity.SubPlazaActivity;
 
 import java.io.ByteArrayOutputStream;
@@ -42,7 +46,7 @@ public class SubPlazaFragment extends Fragment {
     private Button mCollectButton;
     private RecyclerView mRecyclerView;
 
-    private List<MomentForItem> mMomentForItems=new ArrayList<>();
+    private List<MomentForItem> mMomentForItems;
 
     public static Fragment newInstance(SubPlazaActivity.CategoryCode categoryCode){
         Bundle args=new Bundle();
@@ -59,6 +63,7 @@ public class SubPlazaFragment extends Fragment {
         mCategoryCode=(SubPlazaActivity.CategoryCode) getArguments().get(ARG_SUB_CATEGORY_CODE);
 
         //测试用，写了网络接入momentforitem后删除
+        /*
         MomentForItem momentForItem=new MomentForItem();
         momentForItem.setAccount("sb");
         momentForItem.setContent("今天，我要写下第一条动态，测试一下这个子项。话说回来这个东西好好玩啊。");
@@ -82,7 +87,7 @@ public class SubPlazaFragment extends Fragment {
         momentForItem.getImagesList().add(out1.toByteArray());
         momentForItem.getImagesList().add(out1.toByteArray());
         mMomentForItems.add(momentForItem);
-
+        */
 
     }
 
@@ -101,14 +106,19 @@ public class SubPlazaFragment extends Fragment {
 
         switch (mCategoryCode){
             case BUILDING:mTitleTextView.setText(R.string.fragment_image_buildings);
+                mMomentForItems=queryByCategory("buildings");
                 break;
             case DRAWING:mTitleTextView.setText(R.string.fragment_image_drawings);
+                mMomentForItems=queryByCategory("drawings");
                 break;
             case HANDWORK:mTitleTextView.setText(R.string.fragment_image_handwork);
+                mMomentForItems=queryByCategory("handwork");
                 break;
             case SCULPTURE:mTitleTextView.setText(R.string.fragment_image_sculptures);
+                mMomentForItems=queryByCategory("sculptures");
                 break;
             case GRAPHIC:mTitleTextView.setText(R.string.fragment_image_graphics);
+                mMomentForItems=queryByCategory("graphics");
                 break;
             default:
                 break;
@@ -127,4 +137,31 @@ public class SubPlazaFragment extends Fragment {
 
         return view;
     }
+
+    private List<MomentForItem> queryByCategory(String category){
+        MomentsBean momentsBean;
+        List<String> objectIds=PlazaController.getPlazaMoments(category,"createdAt",100,0);
+        List<MomentForItem> momentForItems=new ArrayList<>();
+        for(int i=0;i<objectIds.size();i++){
+            momentsBean= MomentsController.getMomentByObjectId(objectIds.get(i));
+            MomentForItem momentForItem=new MomentForItem();
+            momentForItem.setAccount(momentsBean.getAuthor());
+            momentForItem.setContent(momentsBean.getText());
+            List<String> images=momentsBean.getImages();
+            for(int j=0;j<images.size();j++){
+                byte[] image=FileController.getPicturebyObjectId(images.get(j));
+                momentForItem.getImagesList().add(image);
+            }
+
+            //以下为暂时替代的头像
+            Resources resources=getResources();
+            Bitmap bitmap= BitmapFactory.decodeResource(resources,R.drawable.head_portrait);
+            ByteArrayOutputStream out=new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG,100,out);
+            momentForItem.setHeadPortrait(out.toByteArray());
+        }
+
+        return momentForItems;
+    }
+
 }

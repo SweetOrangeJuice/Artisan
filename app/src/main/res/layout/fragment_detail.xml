@@ -35,15 +35,6 @@
 
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/fragment_detail_recycler_view"
-        android:layout_below="@id/fragment_detail_tool_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/fragment_detail_linear_layout">
-
-    </android.support.v7.widget.RecyclerView>
-
     <LinearLayout
         android:id="@+id/fragment_detail_linear_layout"
         android:background="#FFFFFF"
@@ -70,5 +61,14 @@
             android:textSize="17sp"/>
 
     </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fragment_detail_recycler_view"
+        android:layout_below="@id/fragment_detail_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/fragment_detail_linear_layout">
+
+    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>
