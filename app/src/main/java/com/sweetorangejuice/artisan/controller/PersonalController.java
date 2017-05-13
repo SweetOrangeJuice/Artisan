@@ -146,19 +146,24 @@ public class PersonalController {
         }
         return result;
     }
-
-    public static void putCollection(String objectId){
-        AVObject collectionObject = new AVObject("Collection");
-        collectionObject.put("username",GlobalVariable.username);
-        collectionObject.put("moments",objectId);
+    public static ArrayList<String> getMyCollection(int limit,int skip)
+    {
+        AVQuery<AVObject> query = new AVQuery<>("Collection");
+        query.whereEqualTo("username",GlobalVariable.username);
+        query.limit(limit);
+        query.skip(skip);
+        query.addDescendingOrder("createdAt");
+        List<AVObject> temp;
+        ArrayList<String> result = new ArrayList<>();
         try {
-            collectionObject.save();
-        }catch(AVException e){
-            if(e==null){
-
-            }else{
-
+            temp =  query.find();
+            for(AVObject moment:temp){
+                result.add(moment.getObjectId());
             }
+        }catch(AVException e){
+            e.printStackTrace();
         }
+        return result;
     }
+
 }
