@@ -21,14 +21,14 @@
         android:theme="@style/AppTheme">
         <activity android:name=".view.Activity.LoginActivity"
             android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".view.Activity.MainActivity"
-                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".view.Activity.MainActivity"
+                  android:screenOrientation="portrait">
         </activity>
         <activity android:name=".view.Activity.FolderListActivity"
                   android:screenOrientation="portrait">
@@ -49,6 +49,9 @@
                   android:screenOrientation="portrait">
         </activity>
         <activity android:name=".view.Activity.OriginImageActivity"
+                  android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".view.Activity.SubPersonalActivity"
                   android:screenOrientation="portrait">
         </activity>
 

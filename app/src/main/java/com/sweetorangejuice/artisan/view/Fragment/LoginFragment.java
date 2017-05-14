@@ -65,7 +65,7 @@ public class LoginFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mCurrentUser=AVUser.getCurrentUser();
         if(mCurrentUser!=null){
-            //BaseActivity.finishAll();
+            BaseActivity.finishAll();
             jump();
         }
     }
@@ -155,6 +155,7 @@ public class LoginFragment extends Fragment {
         //isSignUpSuccess= LoginController.signUp(username,password,email);
         //LogUtil.d("TAG",isSignUpSuccess+"");
         LoginController.signUp(username,password,email);
+        rememberAccount(true,username);
         /*
         if(isSignUpSuccess){
             jump();
@@ -173,8 +174,8 @@ public class LoginFragment extends Fragment {
         String username=mSignInAccountEditText.getText().toString();
         String password=mSignInPasswordEditText.getText().toString();
         //isSignInSuccess=LoginController.signIn(username,password);
-
         LoginController.signIn(username,password);
+        rememberAccount(mSignInRememberAccountCheckBox.isChecked(),username);
         /*
         if(isSignInSuccess){
             //检查是否记住了账号，是则保存在SharedPreferences中，否则清除记住状态

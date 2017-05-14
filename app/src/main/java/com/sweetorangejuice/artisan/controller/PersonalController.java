@@ -125,7 +125,7 @@ public class PersonalController {
      * @param skip  跳过前方多少个朋友圈
      * @return
      */
-    public static ArrayList<String> getMyMoments(int limit,int skip)
+    public static List<String> getMyMoments(int limit,int skip)
     {
         AVQuery<AVObject> query = new AVQuery<>("Moments");
         query.whereEqualTo("author",GlobalVariable.username);
@@ -133,7 +133,7 @@ public class PersonalController {
         query.skip(skip);
         query.addDescendingOrder("createdAt");
         List<AVObject> temp;
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         try {
             temp =  query.find();
             for(AVObject moment:temp){
@@ -144,7 +144,7 @@ public class PersonalController {
         }
         return result;
     }
-    public static ArrayList<String> getMyCollection(int limit,int skip)
+    public static List<String> getMyCollection(int limit,int skip)
     {
         AVQuery<AVObject> query = new AVQuery<>("Collection");
         query.whereEqualTo("username",GlobalVariable.username);
@@ -152,11 +152,11 @@ public class PersonalController {
         query.skip(skip);
         query.addDescendingOrder("createdAt");
         List<AVObject> temp;
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         try {
             temp =  query.find();
             for(AVObject moment:temp){
-                result.add(moment.getObjectId());
+                result.add((String) moment.get("momentsId"));
             }
         }catch(AVException e){
             e.printStackTrace();

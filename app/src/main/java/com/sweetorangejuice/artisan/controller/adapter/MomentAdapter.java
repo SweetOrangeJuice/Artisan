@@ -91,7 +91,6 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final ViewHolder holder1=holder;
-        Log.d("TAG","bind??"+holder1.toString());
         MomentForItem momentForItem=mMomentForItems.get(position);
 
         AsyncTask<MomentForItem,Integer,Integer> task=new AsyncTask<MomentForItem, Integer, Integer>() {

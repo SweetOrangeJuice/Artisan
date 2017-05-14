@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.avos.avoscloud.AVUser;
 import com.sweetorangejuice.artisan.R;
 import com.sweetorangejuice.artisan.controller.PersonalController;
-import com.sweetorangejuice.artisan.view.Activity.PersonalActivity;
+import com.sweetorangejuice.artisan.view.Activity.SubPersonalActivity;
 
 /**
  * Created by as on 2017/5/3.
@@ -55,23 +55,54 @@ public class PersonalFragment extends Fragment {
         mNameTextView=(TextView)view.findViewById(R.id.fragment_personal_name);
         mMomentsLinearLayout=(LinearLayout)view.findViewById(R.id.fragment_personal_moments);
         mCollectionsLinearLayout=(LinearLayout)view.findViewById(R.id.fragment_personal_collections);
+        mIdolsLinearLayout=(LinearLayout)view.findViewById(R.id.fragment_personal_idols);
+        mFollowersLinearLayout=(LinearLayout)view.findViewById(R.id.fragment_personal_followers);
         mMessagesLinearLayout=(LinearLayout)view.findViewById(R.id.fragment_personal_messages);
         mRedDotImageView=(ImageView)view.findViewById(R.id.fragment_personal_red_dot);
         mProfilesLinearLayout=(LinearLayout)view.findViewById(R.id.fragment_personal_profiles);
         mLogOutButton=(Button)view.findViewById(R.id.fragment_personal_log_out);
 
         //绑定事件
-
         mLogOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PersonalController.logOut(mCurrentUser);
             }
         });
+        mMomentsLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SubPersonalActivity.actionStart(getActivity(),SubPersonalActivity.ACTION_MOMENTS);
+            }
+        });
+        mCollectionsLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SubPersonalActivity.actionStart(getActivity(),SubPersonalActivity.ACTION_COLLECTIONS);
+            }
+        });
+        mIdolsLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SubPersonalActivity.actionStart(getActivity(),SubPersonalActivity.ACTION_IDOLS);
+            }
+        });
+        mFollowersLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SubPersonalActivity.actionStart(getActivity(),SubPersonalActivity.ACTION_FOLLOWERS);
+            }
+        });
+        mMessagesLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SubPersonalActivity.actionStart(getActivity(),SubPersonalActivity.ACTION_MESSAGES);
+            }
+        });
         mProfilesLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PersonalActivity.startAction(getActivity());
+                SubPersonalActivity.actionStart(getActivity(),SubPersonalActivity.ACTION_PROFILES);
             }
         });
 
