@@ -1,5 +1,7 @@
 package com.sweetorangejuice.artisan.controller;
 
+import android.os.AsyncTask;
+
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
@@ -12,31 +14,39 @@ import java.util.List;
  */
 
 public class PlazaController{
-    /**
-     * 获得广场上的朋友圈
-     * @param category 要查找的朋友圈的目录类别
-     * @param orderBy  朋友圈的排序方式
-     * @param limit    一次查找的数量
-     * @param skip     已经显示的数量
-     * @return
-     */
-    public static List<String> getPlazaMoments(String category,String orderBy,int limit, int skip)
+    public class momentParamBean
     {
-        AVQuery<AVObject> query = new AVQuery<>("Moments");
-        query.whereEqualTo("tag",category);
-        query.limit(limit);
-        query.skip(skip);
-        query.addDescendingOrder(orderBy);
-        List<AVObject> temp;
-        List<String> result = new ArrayList<>();
-        try {
-            temp =  query.find();
-            for(AVObject moment:temp){
-                result.add(moment.getObjectId());
+        String category;
+        String orderBy;
+        int limit;
+        int skip;
+    }
+    public class getPlazaMomentsAsynk extends AsyncTask<momentParamBean, Integer, List<String> > {
+
+        /**
+         * doInBackground函数
+         *  在后台执行的操作
+         * @param params
+         * @return
+         */
+        @Override
+        protected List<String> doInBackground(momentParamBean... params) {
+            AVQuery<AVObject> query = new AVQuery<>("Moments");
+            query.whereEqualTo("tag",params[0].category);
+            query.limit(params[0].limit);
+            query.skip(params[0].skip);
+            query.addDescendingOrder(params[0].orderBy);
+            List<AVObject> temp;
+            List<String> result = new ArrayList<>();
+            try {
+                temp =  query.find();
+                for(AVObject moment:temp){
+                    result.add(moment.getObjectId());
+                }
+            }catch(AVException e){
+                e.printStackTrace();
             }
-        }catch(AVException e){
-            e.printStackTrace();
+            return result;
         }
-        return result;
     }
 }
