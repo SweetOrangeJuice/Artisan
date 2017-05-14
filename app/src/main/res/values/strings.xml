@@ -54,5 +54,6 @@
     <string name="collect_sort">按收藏排序</string>
     <string name="fragment_detail_comment">发表评论</string>
     <string name="fragment_detail_list">评论列表</string>
+    <string name="loading">加载中</string>
 
 </resources>

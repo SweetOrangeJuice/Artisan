@@ -33,7 +33,8 @@
             android:src="@drawable/ic_search"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"/>
+            android:layout_marginRight="15dp"
+            android:visibility="gone"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -46,7 +47,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:background="#FFFFFF">
+        android:background="#FFFFFF"
+        android:visibility="gone">
 
         <Button
             android:id="@+id/time_sort"
@@ -100,11 +102,36 @@
         android:layout_height="1dp"
         android:background="#aaa"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/fragment_sub_plaza_recycler_view"
+    <RelativeLayout
+        android:id="@+id/fragment_sub_plaza_loading"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
-    </android.support.v7.widget.RecyclerView>
+        <pl.droidsonroids.gif.GifTextView
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading"
+            android:textSize="17sp"
+            android:drawableBottom="@drawable/ic_loading"/>
+
+    </RelativeLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/fragment_swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fragment_sub_plaza_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

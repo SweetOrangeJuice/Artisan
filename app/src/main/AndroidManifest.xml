@@ -21,28 +21,35 @@
         android:theme="@style/AppTheme">
         <activity android:name=".view.Activity.LoginActivity"
             android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".view.Activity.MainActivity"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".view.Activity.MainActivity"
+        <activity android:name=".view.Activity.FolderListActivity"
                   android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.Activity.FolderListActivity" >
+        <activity android:name=".view.Activity.ImgsSelectActivity"
+                  android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.Activity.ImgsSelectActivity" >
+        <activity android:name=".base.ImagesBaseActivity"
+                  android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".base.ImagesBaseActivity" >
+        <activity android:name=".base.BaseActivity"
+                  android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".base.BaseActivity">
+        <activity android:name=".view.Activity.SubPlazaActivity"
+                  android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.Activity.SubPlazaActivity">
+        <activity android:name=".view.Activity.DetailActivity"
+                  android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.Activity.DetailActivity">
-        </activity>
-        <activity android:name=".view.Activity.OriginImageActivity">
+        <activity android:name=".view.Activity.OriginImageActivity"
+                  android:screenOrientation="portrait">
         </activity>
 
         <provider

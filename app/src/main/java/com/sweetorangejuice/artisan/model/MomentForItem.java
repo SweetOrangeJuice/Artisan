@@ -14,6 +14,7 @@ public class MomentForItem {
     private String mContent;
     private List<byte[]> mImagesList;
     private List<byte[]> mImagesList_1;
+    private String mObjectId;
 
     public MomentForItem(){
         mImagesList=new ArrayList<>();
@@ -58,5 +59,13 @@ public class MomentForItem {
 
     public void setImagesList_1(List<byte[]> imagesList_1) {
         mImagesList_1 = imagesList_1;
+    }
+
+    public String getObjectId() {
+        return mObjectId;
+    }
+
+    public void setObjectId(String objectId) {
+        mObjectId = objectId;
     }
 }

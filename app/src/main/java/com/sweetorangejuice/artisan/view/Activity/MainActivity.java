@@ -14,7 +14,6 @@ import com.sweetorangejuice.artisan.view.Fragment.HomeFragment;
 import com.sweetorangejuice.artisan.view.Fragment.ImagesFragment;
 import com.sweetorangejuice.artisan.view.Fragment.PersonalFragment;
 import com.sweetorangejuice.artisan.view.Fragment.PlazaFragment;
-import com.sweetorangejuice.artisan.view.Fragment.ShoppingFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
          */
         @Override
         public int getCount() {
-            return 5;
+            return 4;
         }
 
         /**
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     R.drawable.ic_home,
                     R.drawable.ic_plaza,
                     R.drawable.ic_moments,
-                    R.drawable.ic_shopping,
+                    //R.drawable.ic_shopping,
                     R.drawable.ic_personal,
             };
         }
@@ -84,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                     R.drawable.ic_home,
                     R.drawable.ic_plaza,
                     R.drawable.ic_moments,
-                    R.drawable.ic_shopping,
+                    //R.drawable.ic_shopping,
                     R.drawable.ic_personal,
             };
         }
@@ -100,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     getString(R.string.main_activity_home),
                     getString(R.string.main_activity_plaza),
                     getString(R.string.main_activity_moments),
-                    getString(R.string.main_activity_shopping),
+                    //getString(R.string.main_activity_shopping),
                     getString(R.string.main_activity_personal)
             };
         }
@@ -115,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             PlazaFragment.newInstance(),
             //MomentsFragment.newInstance(),
             ImagesFragment.newInstance(),
-            ShoppingFragment.newInstance(),
+            //ShoppingFragment.newInstance(),
             PersonalFragment.newInstance(),
     };
 

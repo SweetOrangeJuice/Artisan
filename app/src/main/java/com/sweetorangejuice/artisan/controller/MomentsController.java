@@ -1,5 +1,6 @@
 package com.sweetorangejuice.artisan.controller;
 
+import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -11,6 +12,7 @@ import com.avos.avoscloud.SaveCallback;
 import com.sweetorangejuice.artisan.base.ArtisanApplication;
 import com.sweetorangejuice.artisan.base.BaseActivity;
 import com.sweetorangejuice.artisan.base.GlobalVariable;
+import com.sweetorangejuice.artisan.model.Comment;
 import com.sweetorangejuice.artisan.model.MomentsBean;
 import com.sweetorangejuice.artisan.util.LogUtil;
 import com.sweetorangejuice.artisan.view.Activity.LoginActivity;
@@ -57,10 +59,12 @@ public class MomentsController {
             if (momentsState != State.OK) {        //当朋友圈发布不成功时
                 LogUtil.d("MomentsController","Distribute Moments Failed.");
                 drawBack();                 //执行远端删除操作
+                Toast.makeText(ArtisanApplication.getContext(), "当前网络不佳，请稍候重试", Toast.LENGTH_SHORT).show();
                 //Todo:这里写发布不成功的代码
                 momentsState = State.OK;
             }else{                          //当朋友圈发布成功时
                  LogUtil.d("MomentsController","Distribute Moments Succeed.");
+                 Toast.makeText(ArtisanApplication.getContext(),"发布成功！",Toast.LENGTH_SHORT).show();
                 //Todo:这里写发布成功的代码
             }
         }else if(taskCount==taskFinished+1){
@@ -221,6 +225,42 @@ public class MomentsController {
         LoginActivity.startAction(ArtisanApplication.getContext());
     }
 
+    public static boolean isLike(String username,String momentsId){
+        AVQuery<AVObject> query=new AVQuery<>("Like");
+        query.whereEqualTo("username",username);
+        query.whereEqualTo("momentsId",momentsId);
+        List<AVObject> result;
+        try {
+            result=query.find();
+            if(result.size()>0){
+                return true;
+            }else {
+                return false;
+            }
+        }catch (AVException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean isCollect(String username,String momentsId){
+        AVQuery<AVObject> query=new AVQuery<>("Collection");
+        query.whereEqualTo("username",username);
+        query.whereEqualTo("momentsId",momentsId);
+        List<AVObject> result;
+        try {
+            result=query.find();
+            if(result.size()>0){
+                return true;
+            }else {
+                return false;
+            }
+        }catch (AVException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static void like(String username,String momentsId){
         AVObject likeObject = new AVObject("Like");
         likeObject.put("username",username);
@@ -235,6 +275,23 @@ public class MomentsController {
 
     public static void dislike(String username,String momentsId){
         //在这里写取消点赞的代码
+        AsyncTask<String,Integer,Integer> asyncTask=new AsyncTask<String, Integer, Integer>() {
+            @Override
+            protected Integer doInBackground(String... params) {
+                AVQuery<AVObject> query=new AVQuery<>("Like");
+                query.whereEqualTo("username",params[0]);
+                query.whereEqualTo("momentsId",params[1]);
+                List<AVObject> result;
+                try {
+                    result=query.find();
+                    AVObject target=result.get(0);
+                    target.deleteInBackground();
+                }catch (AVException e){
+                    e.printStackTrace();
+                }
+                return 100;
+            }
+        }.execute(username,momentsId);
     }
 
     public static void collection(String username,String momentsId){
@@ -251,6 +308,23 @@ public class MomentsController {
 
     public static void disCollection(String username,String momentsId){
         //在这里写取消收藏的代码
+        AsyncTask<String,Integer,Integer> asyncTask=new AsyncTask<String, Integer, Integer>() {
+            @Override
+            protected Integer doInBackground(String... params) {
+                AVQuery<AVObject> query=new AVQuery<>("Collection");
+                query.whereEqualTo("username",params[0]);
+                query.whereEqualTo("momentsId",params[1]);
+                List<AVObject> result;
+                try {
+                    result=query.find();
+                    AVObject target=result.get(0);
+                    target.deleteInBackground();
+                }catch (AVException e){
+                    e.printStackTrace();
+                }
+                return 100;
+            }
+        }.execute(username,momentsId);
     }
 
     public static void Comments(String username,String momentsId,String content){
@@ -264,5 +338,25 @@ public class MomentsController {
                 //在此处发送评论成功的代码
             }
         });
+    }
+
+    public static List<Comment> getComments(String momentsId){
+        AVQuery<AVObject> query=new AVQuery<>("Comments");
+        query.whereEqualTo("momentsId",momentsId);
+        List<AVObject> result;
+        List<Comment> comments=new ArrayList<>();
+        try {
+            result=query.find();
+            for(int i=0;i<result.size();i++){
+                AVObject avObject=result.get(i);
+                Comment comment=new Comment();
+                comment.setAccount((String)avObject.get("username"));
+                comment.setText((String)avObject.get("Content"));
+                comments.add(comment);
+            }
+        }catch (AVException e){
+            e.printStackTrace();
+        }
+        return comments;
     }
 }

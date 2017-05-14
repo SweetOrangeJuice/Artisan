@@ -1,17 +1,24 @@
 package com.sweetorangejuice.artisan.controller.adapter;
 
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.avos.avoscloud.AVUser;
 import com.bumptech.glide.Glide;
 import com.sweetorangejuice.artisan.R;
 import com.sweetorangejuice.artisan.base.ArtisanApplication;
+import com.sweetorangejuice.artisan.base.GlobalVariable;
+import com.sweetorangejuice.artisan.controller.MomentsController;
 import com.sweetorangejuice.artisan.model.MomentForItem;
+import com.sweetorangejuice.artisan.view.Activity.DetailActivity;
 import com.sweetorangejuice.artisan.view.Activity.OriginImageActivity;
 
 import java.util.List;
@@ -23,6 +30,7 @@ import java.util.List;
 public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.ViewHolder>{
 
     private List<MomentForItem> mMomentForItems;
+    private AVUser mCurrentUser;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         View mView;
@@ -82,7 +90,43 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        final ViewHolder holder1=holder;
+        Log.d("TAG","bind??"+holder1.toString());
         MomentForItem momentForItem=mMomentForItems.get(position);
+
+        AsyncTask<MomentForItem,Integer,Integer> task=new AsyncTask<MomentForItem, Integer, Integer>() {
+            boolean isLike=false;
+            boolean isCollected=false;
+
+            @Override
+            protected void onPostExecute(Integer integer) {
+                super.onPostExecute(integer);
+                if(isLike){
+                    holder1.mLike.setBackgroundResource(R.drawable.fragment_seleted_button);
+                    holder1.mIsLike=true;
+                }else{
+                    holder1.mLike.setBackgroundResource(R.drawable.fragment_unseleted_button);
+                    holder1.mIsLike=false;
+                }
+
+                if(isCollected){
+                    holder1.mCollect.setBackgroundResource(R.drawable.fragment_seleted_button);
+                    holder1.mIsCollect=true;
+                }else{
+                    holder1.mCollect.setBackgroundResource(R.drawable.fragment_unseleted_button);
+                    holder1.mIsCollect=false;
+                }
+            }
+
+            @Override
+            protected Integer doInBackground(MomentForItem... params) {
+                Log.d("haha",GlobalVariable.username+"+"+params[0].getObjectId());
+                isLike=MomentsController.isLike(GlobalVariable.username,params[0].getObjectId());
+                isCollected=MomentsController.isCollect(GlobalVariable.username,params[0].getObjectId());
+                return 100;
+            }
+        }.execute(momentForItem);
+
         Glide.with(ArtisanApplication.getContext()).load(momentForItem.getHeadPortrait()).into(holder.mHeadPortrait);
         holder.mAccount.setText(momentForItem.getAccount());
         holder.mContent.setText(momentForItem.getContent());
@@ -128,6 +172,7 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.ViewHolder
                 default:
                     break;
             }
+
         }
     }
 
@@ -137,6 +182,12 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.ViewHolder
                 .inflate(R.layout.moment_item,parent,false);
         final ViewHolder holder=new ViewHolder(view);
 
+        holder.mHeadPortrait.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO:此处待添加点击头像跳转到对应用户个人资料页
+            }
+        });
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,37 +197,49 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.ViewHolder
         holder.mComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO:此处待添加点击评论跳转至详情页的事件
+                MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
+                DetailActivity.actionStart(parent.getContext(),momentForItem.getObjectId());
             }
         });
         holder.mLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!holder.mIsLike){
-                    holder.mLike.setBackgroundResource(R.drawable.fragment_seleted_button);
-                    holder.mIsLike=true;
-                    //TODO:此处待添加后台增加动态的点赞数
+                mCurrentUser=AVUser.getCurrentUser();
+                if(mCurrentUser!=null){
+                    if(!holder.mIsLike){
+                        holder.mLike.setBackgroundResource(R.drawable.fragment_seleted_button);
+                        holder.mIsLike=true;
+                        MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
+                        MomentsController.like(GlobalVariable.username,momentForItem.getObjectId());
+                    }else{
+                        holder.mLike.setBackgroundResource(R.drawable.fragment_unseleted_button);
+                        holder.mIsLike=false;
+                        MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
+                        MomentsController.dislike(GlobalVariable.username,momentForItem.getObjectId());
+                    }
                 }else{
-                    holder.mLike.setBackgroundResource(R.drawable.fragment_unseleted_button);
-                    holder.mIsLike=false;
-                    //TODO:此处待添加后台减少动态的点赞数
-
+                    Toast.makeText(parent.getContext(),"你尚未登录，无法点赞。",Toast.LENGTH_SHORT).show();
                 }
             }
         });
         holder.mCollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!holder.mIsCollect){
-                    holder.mCollect.setBackgroundResource(R.drawable.fragment_seleted_button);
-                    holder.mIsCollect=true;
-                    //TODO:此处待添加后台增加动态的点赞数
-
+                mCurrentUser=AVUser.getCurrentUser();
+                if(mCurrentUser!=null){
+                    if(!holder.mIsCollect){
+                        holder.mCollect.setBackgroundResource(R.drawable.fragment_seleted_button);
+                        holder.mIsCollect=true;
+                        MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
+                        MomentsController.collection(GlobalVariable.username,momentForItem.getObjectId());
+                    }else{
+                        holder.mCollect.setBackgroundResource(R.drawable.fragment_unseleted_button);
+                        holder.mIsCollect=false;
+                        MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
+                        MomentsController.disCollection(GlobalVariable.username,momentForItem.getObjectId());
+                    }
                 }else{
-                    holder.mCollect.setBackgroundResource(R.drawable.fragment_unseleted_button);
-                    holder.mIsCollect=false;
-                    //TODO:此处待添加后台减少动态的点赞数
-
+                    Toast.makeText(parent.getContext(),"你尚未登录，无法收藏。",Toast.LENGTH_SHORT).show();
                 }
             }
         });

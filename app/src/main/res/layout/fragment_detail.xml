@@ -41,7 +41,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
 
         <EditText
             android:id="@+id/fragment_detail_edit_text"
@@ -62,12 +63,30 @@
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/fragment_detail_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/fragment_detail_tool_bar"
+        android:visibility="visible">
+
+        <pl.droidsonroids.gif.GifTextView
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading"
+            android:textSize="17sp"
+            android:drawableBottom="@drawable/ic_loading"/>
+
+    </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/fragment_detail_recycler_view"
         android:layout_below="@id/fragment_detail_tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/fragment_detail_linear_layout">
+        android:layout_above="@id/fragment_detail_linear_layout"
+        android:visibility="gone">
 
     </android.support.v7.widget.RecyclerView>
 

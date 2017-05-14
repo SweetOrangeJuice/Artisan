@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sweetorangejuice.artisan.R;
@@ -48,6 +50,8 @@ public class SubPlazaFragment extends Fragment {
     private Button mHotSortButton;
     private Button mCollectButton;
     private RecyclerView mRecyclerView;
+    private RelativeLayout mLoading;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private List<MomentForItem> mMomentForItems=new ArrayList<>();
 
@@ -106,6 +110,8 @@ public class SubPlazaFragment extends Fragment {
         mHotSortButton=(Button)view.findViewById(R.id.hot_sort);
         mCollectButton=(Button)view.findViewById(R.id.collect_sort);
         mRecyclerView=(RecyclerView)view.findViewById(R.id.fragment_sub_plaza_recycler_view);
+        mLoading=(RelativeLayout) view.findViewById(R.id.fragment_sub_plaza_loading);
+        mSwipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.fragment_swipe_refresh_layout);
 
         LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
@@ -138,6 +144,31 @@ public class SubPlazaFragment extends Fragment {
                 break;
         }
 
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                switch (mCategoryCode){
+                    case BUILDING:mTitleTextView.setText(R.string.fragment_image_buildings);
+                        queryByCategory("buildings");
+                        break;
+                    case DRAWING:mTitleTextView.setText(R.string.fragment_image_drawings);
+                        queryByCategory("drawings");
+                        break;
+                    case HANDWORK:mTitleTextView.setText(R.string.fragment_image_handwork);
+                        queryByCategory("handwork");
+                        break;
+                    case SCULPTURE:mTitleTextView.setText(R.string.fragment_image_sculptures);
+                        queryByCategory("sculptures");
+                        break;
+                    case GRAPHIC:mTitleTextView.setText(R.string.fragment_image_graphics);
+                        queryByCategory("graphics");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
         return view;
     }
 
@@ -145,9 +176,22 @@ public class SubPlazaFragment extends Fragment {
         AsyncTask<String,Integer,Integer> task=new AsyncTask<String, Integer, Integer>() {
 
             @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                mLoading.setVisibility(View.VISIBLE);
+                mRecyclerView.setVisibility(View.GONE);
+                mSwipeRefreshLayout.setVisibility(View.GONE);
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
             protected void onPostExecute(Integer integer) {
                 super.onPostExecute(integer);
                 mAdapter.notifyDataSetChanged();
+                mLoading.setVisibility(View.GONE);
+                mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -161,6 +205,7 @@ public class SubPlazaFragment extends Fragment {
                     MomentForItem momentForItem=new MomentForItem();
                     momentForItem.setAccount(momentsBean.getAuthor());
                     momentForItem.setContent(momentsBean.getText());
+                    momentForItem.setObjectId(objectIds.get(i));
                     List<String> images=momentsBean.getImages();
                     for(int j=0;j<images.size();j++){
                         String img_obj_id=images.get(j);
