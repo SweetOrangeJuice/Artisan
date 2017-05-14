@@ -1,5 +1,6 @@
 package com.sweetorangejuice.artisan.view.Fragment;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,8 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
 import com.bumptech.glide.Glide;
 import com.sweetorangejuice.artisan.R;
+
+import java.util.List;
 
 /**
  * Created by as on 2017/5/13.
@@ -22,9 +29,9 @@ public class OriginImageFragment extends Fragment {
     private ImageView mBackImageView;
     private ImageView mOriginImageView;
 
-    public static Fragment newInstance(byte[] image) {
+    public static Fragment newInstance(String image) {
         Bundle args=new Bundle();
-        args.putByteArray(ARG_IMAGE,image);
+        args.putString(ARG_IMAGE,image);
         OriginImageFragment fragment=new OriginImageFragment();
         fragment.setArguments(args);
         return fragment;
@@ -45,9 +52,37 @@ public class OriginImageFragment extends Fragment {
             }
         });
 
-        byte[] image=getArguments().getByteArray(ARG_IMAGE);
-        Glide.with(getActivity()).load(image).into(mOriginImageView);
+        String objectId=getArguments().getString(ARG_IMAGE);
+        setImage(objectId);
 
         return view;
+    }
+
+    private void setImage(final String objectId){
+        AsyncTask<String,Integer,Integer> task=new AsyncTask<String, Integer, Integer>() {
+            byte[] bytes;
+
+            @Override
+            protected void onPostExecute(Integer integer) {
+                super.onPostExecute(integer);
+                Glide.with(getActivity()).load(bytes).into(mOriginImageView);
+            }
+
+            @Override
+            protected Integer doInBackground(String... params) {
+                AVQuery<AVObject> query=new AVQuery<AVObject>("_File");
+                query.whereEqualTo("objectId",objectId);
+                List<AVObject> result;
+                try {
+                    result=query.find();
+                    AVObject image=result.get(0);
+                    AVFile file=AVFile.withAVObject(image);
+                    bytes=file.getData();
+                }catch (AVException e){
+                    e.printStackTrace();
+                }
+                return 100;
+            }
+        }.execute(objectId);
     }
 }

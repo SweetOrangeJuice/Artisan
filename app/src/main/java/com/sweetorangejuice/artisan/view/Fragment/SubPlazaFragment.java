@@ -210,9 +210,8 @@ public class SubPlazaFragment extends Fragment {
                     for(int j=0;j<images.size();j++){
                         String img_obj_id=images.get(j);
                         byte[] image= FileController.getThumbnailbyObjectId(img_obj_id,150,150);
-                        byte[] image_1=FileController.getPicturebyObjectId(img_obj_id);
                         momentForItem.getImagesList().add(image);
-                        momentForItem.getImagesList_1().add(image_1);   //原图
+                        momentForItem.getImagesList_1().add(img_obj_id);   //原图
                     }
 
                     //以下为暂时替代的头像

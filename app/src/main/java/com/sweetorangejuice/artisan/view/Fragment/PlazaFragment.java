@@ -23,13 +23,14 @@ import java.util.List;
 
 public class PlazaFragment extends Fragment{
 
-    private List<Category> mCategories=new ArrayList<>();
+    private List<Category> mCategories;
 
     private RecyclerView mRecyclerView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mCategories=new ArrayList<>();
         Category building=new Category();
         building.setImageResId(R.drawable.ic_building);
         building.setNameResId(R.string.fragment_image_buildings);

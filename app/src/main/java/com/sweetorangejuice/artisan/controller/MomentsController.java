@@ -8,10 +8,10 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.SaveCallback;
 import com.sweetorangejuice.artisan.base.ArtisanApplication;
 import com.sweetorangejuice.artisan.base.BaseActivity;
-import com.sweetorangejuice.artisan.base.GlobalVariable;
 import com.sweetorangejuice.artisan.model.Comment;
 import com.sweetorangejuice.artisan.model.MomentsBean;
 import com.sweetorangejuice.artisan.util.LogUtil;
@@ -70,7 +70,7 @@ public class MomentsController {
         }else if(taskCount==taskFinished+1){
             AVObject momentsObject = new AVObject("Moments");           //建立朋友圈对象
             momentsObject.put("tag", moments.getTag());                 //标签
-            momentsObject.put("author", GlobalVariable.username);       //作者
+            momentsObject.put("author", AVUser.getCurrentUser().getUsername());       //作者
             momentsObject.put("images",objectIds);
             //momentsObject.put("images", imageFiles);                    //图片列表
             momentsObject.put("text", moments.getText());               //文字内容

@@ -17,7 +17,6 @@ import android.widget.RelativeLayout;
 
 import com.avos.avoscloud.AVUser;
 import com.sweetorangejuice.artisan.R;
-import com.sweetorangejuice.artisan.base.GlobalVariable;
 import com.sweetorangejuice.artisan.controller.MomentsController;
 import com.sweetorangejuice.artisan.controller.adapter.CommentAdapter;
 import com.sweetorangejuice.artisan.model.Comment;
@@ -95,7 +94,7 @@ public class DetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String text=mContentEditText.getText().toString();
-                MomentsController.Comments(GlobalVariable.username,mObjectId,text);
+                MomentsController.Comments(AVUser.getCurrentUser().getUsername(),mObjectId,text);
                 mContentEditText.setText("");
                 refresh(text);
             }
@@ -129,7 +128,7 @@ public class DetailFragment extends Fragment {
     private void refresh(String text){
         Comment comment=new Comment();
         comment.setText(text);
-        comment.setAccount(GlobalVariable.username);
+        comment.setAccount(AVUser.getCurrentUser().getUsername());
         mComments.add(comment);
         mAdapter.notifyDataSetChanged();
     }

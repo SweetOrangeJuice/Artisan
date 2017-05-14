@@ -13,7 +13,7 @@ public class MomentForItem {
     private String mAccount;
     private String mContent;
     private List<byte[]> mImagesList;
-    private List<byte[]> mImagesList_1;
+    private List<String> mImagesList_1;
     private String mObjectId;
 
     public MomentForItem(){
@@ -53,19 +53,19 @@ public class MomentForItem {
         mImagesList = imagesList;
     }
 
-    public List<byte[]> getImagesList_1() {
-        return mImagesList_1;
-    }
-
-    public void setImagesList_1(List<byte[]> imagesList_1) {
-        mImagesList_1 = imagesList_1;
-    }
-
     public String getObjectId() {
         return mObjectId;
     }
 
     public void setObjectId(String objectId) {
         mObjectId = objectId;
+    }
+
+    public List<String> getImagesList_1() {
+        return mImagesList_1;
+    }
+
+    public void setImagesList_1(List<String> imagesList_1) {
+        mImagesList_1 = imagesList_1;
     }
 }

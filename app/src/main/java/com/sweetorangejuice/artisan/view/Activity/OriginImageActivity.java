@@ -15,21 +15,14 @@ public class OriginImageActivity extends SingleFragmentActivity {
 
     private static final String EXTRA_IMAGE="extra_image";
 
-    private byte[] image;
-
-    public static void actionStart(Context context,byte[] image){
+    public static void actionStart(Context context,String objectId){
         Intent intent=new Intent(context,OriginImageActivity.class);
-        intent.putExtra(EXTRA_IMAGE,image);
+        intent.putExtra(EXTRA_IMAGE,objectId);
         context.startActivity(intent);
     }
 
     @Override
     protected Fragment createFragment() {
-        byte[] temp=getIntent().getByteArrayExtra(EXTRA_IMAGE);
-        image=new byte[temp.length];
-        for(int i=0;i<temp.length;i++){
-            image[i]=temp[i];
-        }
-        return OriginImageFragment.newInstance(image);
+        return OriginImageFragment.newInstance(getIntent().getStringExtra(EXTRA_IMAGE));
     }
 }
