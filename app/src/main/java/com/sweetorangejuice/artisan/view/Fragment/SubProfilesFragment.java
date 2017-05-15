@@ -3,8 +3,6 @@ package com.sweetorangejuice.artisan.view.Fragment;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -22,8 +20,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.avos.avoscloud.AVCloudQueryResult;
 import com.avos.avoscloud.AVException;
@@ -33,18 +31,13 @@ import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.CloudQueryCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.sweetorangejuice.artisan.R;
-import com.sweetorangejuice.artisan.base.ArtisanApplication;
-import com.sweetorangejuice.artisan.controller.MomentsController;
 import com.sweetorangejuice.artisan.util.FileUtils;
 import com.sweetorangejuice.artisan.util.LogUtil;
 import com.sweetorangejuice.artisan.view.Activity.FolderListActivity;
 import com.sweetorangejuice.artisan.view.Activity.ModifyPersonalActivity;
 
-import org.w3c.dom.Text;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -61,6 +54,7 @@ public class SubProfilesFragment extends Fragment{
     private AlertDialog mySelectDialog;
     private Button modifyPersonalProfilesButton;
     private CircleImageView headCircleImageView;
+    private ImageView mBackImageView;
     private TextView usernameTextView;
     private TextView genderTextView;
     private TextView ageTextView;
@@ -76,10 +70,14 @@ public class SubProfilesFragment extends Fragment{
         View view=inflater.inflate(R.layout.fragment_sub_profiles,container,false);
         modifyPersonalProfilesButton = (Button)view.findViewById(R.id.fragment_personal_modify_profiles);
         headCircleImageView = (CircleImageView)view.findViewById(R.id.fragment_sub_personal_head_portrait);
+        usernameTextView = (TextView)view.findViewById(R.id.fragment_sub_personal_name);
         genderTextView = (TextView)view.findViewById(R.id.fragment_sub_personal_profiles_gender_value);
         schoolTextView = (TextView)view.findViewById(R.id.fragment_sub_personal_profiles_age_value);
         ageTextView = (TextView)view.findViewById(R.id.fragment_sub_personal_profiles_age_value);
         tagTextView = (TextView)view.findViewById(R.id.fragment_sub_personal_profiles_tag_edit);
+        mBackImageView=(ImageView)view.findViewById(R.id.fragment_sub_profiles_back);
+        usernameTextView.setText(AVUser.getCurrentUser().getUsername());
+
         modifyPersonalProfilesButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -94,6 +92,12 @@ public class SubProfilesFragment extends Fragment{
                 if (isImageSet == false) {
                     showmySelectDialog("拍照", "从相册选择");
                 }
+            }
+        });
+        mBackImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
             }
         });
         return view;
@@ -203,13 +207,18 @@ public class SubProfilesFragment extends Fragment{
                             if (e == null) {                            //当该上传操作成功时
                                 //Todo 这里写上传头像成功的代码
                                 objectId = file.getObjectId();
+                                Log.d("TAG",objectId);
                                 //Todo 这里写更新用户信息表中头像的代码
                                 AVQuery.doCloudQueryInBackground("update Person set headImage='" + objectId + "' where username='" + AVUser.getCurrentUser().getUsername() + "'",
                                         new CloudQueryCallback<AVCloudQueryResult>() {
                                             @Override
                                             public void done(AVCloudQueryResult avCloudQueryResult, AVException e) {
                                                 // 如果 e 为空，说明保存成功
-                                                LogUtil.d("TAG", "保存成功");
+                                                if(e==null)
+                                                {
+                                                    Log.d("TAG","保存成功");
+                                                }else
+                                                    e.printStackTrace();
                                             }
                                         });
                             } else {

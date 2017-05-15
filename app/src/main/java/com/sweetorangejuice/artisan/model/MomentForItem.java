@@ -68,4 +68,5 @@ public class MomentForItem {
     public void setImagesList_1(List<String> imagesList_1) {
         mImagesList_1 = imagesList_1;
     }
+
 }
