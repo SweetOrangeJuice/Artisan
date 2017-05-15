@@ -20,6 +20,7 @@ import com.sweetorangejuice.artisan.controller.MomentsController;
 import com.sweetorangejuice.artisan.model.MomentForItem;
 import com.sweetorangejuice.artisan.view.Activity.DetailActivity;
 import com.sweetorangejuice.artisan.view.Activity.OriginImageActivity;
+import com.sweetorangejuice.artisan.view.Activity.SubPersonalActivity;
 
 import java.util.List;
 
@@ -184,15 +185,26 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.ViewHolder
         holder.mHeadPortrait.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO:此处待添加点击头像跳转到对应用户个人资料页
+                MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
+                String account=momentForItem.getAccount();
+                if(account.equals(AVUser.getCurrentUser().getUsername())){
+                    SubPersonalActivity.actionStart(parent.getContext(),
+                            SubPersonalActivity.ACTION_PROFILES);
+                }else{
+                    SubPersonalActivity.actionStart(parent.getContext(),
+                            SubPersonalActivity.ACTION_OTHER_PROFILES,
+                            account);
+                }
             }
         });
+        /*
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO:此处可添加点击整个动态的事件
             }
         });
+        */
         holder.mComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

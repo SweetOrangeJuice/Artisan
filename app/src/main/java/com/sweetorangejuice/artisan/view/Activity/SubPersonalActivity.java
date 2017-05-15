@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 
 import com.sweetorangejuice.artisan.base.SingleFragmentActivity;
+import com.sweetorangejuice.artisan.view.Fragment.OthersProfilesFragment;
 import com.sweetorangejuice.artisan.view.Fragment.SubCollectionFragment;
 import com.sweetorangejuice.artisan.view.Fragment.SubFollowerFragment;
 import com.sweetorangejuice.artisan.view.Fragment.SubIdolFragment;
@@ -24,12 +25,21 @@ public class SubPersonalActivity extends SingleFragmentActivity{
     public static final int ACTION_FOLLOWERS=4;
     public static final int ACTION_MESSAGES=5;
     public static final int ACTION_PROFILES=6;
+    public static final int ACTION_OTHER_PROFILES=7;
 
     private static final String EXTRA_ACTION_CODE="action_code";
+    private static final String EXTRA_USERNAME="username";
 
     public static void actionStart(Context context,int actionCode){
         Intent intent=new Intent(context,SubPersonalActivity.class);
         intent.putExtra(EXTRA_ACTION_CODE,actionCode);
+        context.startActivity(intent);
+    }
+
+    public static void actionStart(Context context,int actionCode,String username){
+        Intent intent=new Intent(context,SubPersonalActivity.class);
+        intent.putExtra(EXTRA_ACTION_CODE,actionCode);
+        intent.putExtra(EXTRA_USERNAME,username);
         context.startActivity(intent);
     }
 
@@ -49,6 +59,9 @@ public class SubPersonalActivity extends SingleFragmentActivity{
                 return SubMessageFragment.newInstance();
             case 6:
                 return SubProfilesFragment.newInstance();
+            case 7:
+                String username=getIntent().getStringExtra(EXTRA_USERNAME);
+                return OthersProfilesFragment.newInstance(username);
             default:
                 return null;
         }
