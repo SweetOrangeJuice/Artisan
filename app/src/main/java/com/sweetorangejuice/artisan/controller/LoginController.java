@@ -5,7 +5,6 @@ import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.LogInCallback;
 import com.avos.avoscloud.SignUpCallback;
-import com.sweetorangejuice.artisan.base.GlobalVariable;
 import com.sweetorangejuice.artisan.util.LogUtil;
 import com.sweetorangejuice.artisan.view.Fragment.LoginFragment;
 
@@ -113,7 +112,7 @@ public class LoginController {
             @Override                                           //后台登录函数
             public void done(AVUser avUser, AVException e) {
                 if (e == null) {                                //登录成功
-                    GlobalVariable.username = username;
+                    //GlobalVariable.username = username;
                     LoginFragment.onSignInSucceed();
                     LogUtil.d("LoginController","登录成功");
                 } else {                                        //登录失败
@@ -130,7 +129,7 @@ public class LoginController {
      */
     public static void LogOut(){
         AVUser.getCurrentUser().logOut();
-        GlobalVariable.username = null;
+        //GlobalVariable.username = null;
         currentInfo = null;
         currentUser = null;
     }

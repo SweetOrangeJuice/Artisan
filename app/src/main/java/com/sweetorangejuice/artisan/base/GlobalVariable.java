@@ -5,5 +5,5 @@ package com.sweetorangejuice.artisan.base;
  */
 
 public class GlobalVariable {
-    public static String username;
+    //public static String username;
 }

@@ -2,7 +2,6 @@ package com.sweetorangejuice.artisan.controller.adapter;
 
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import com.avos.avoscloud.AVUser;
 import com.bumptech.glide.Glide;
 import com.sweetorangejuice.artisan.R;
 import com.sweetorangejuice.artisan.base.ArtisanApplication;
-import com.sweetorangejuice.artisan.base.GlobalVariable;
 import com.sweetorangejuice.artisan.controller.MomentsController;
 import com.sweetorangejuice.artisan.model.MomentForItem;
 import com.sweetorangejuice.artisan.view.Activity.DetailActivity;
@@ -120,9 +118,8 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.ViewHolder
 
             @Override
             protected Integer doInBackground(MomentForItem... params) {
-                Log.d("haha",GlobalVariable.username+"+"+params[0].getObjectId());
-                isLike=MomentsController.isLike(GlobalVariable.username,params[0].getObjectId());
-                isCollected=MomentsController.isCollect(GlobalVariable.username,params[0].getObjectId());
+                isLike=MomentsController.isLike(AVUser.getCurrentUser().getUsername(),params[0].getObjectId());
+                isCollected=MomentsController.isCollect(AVUser.getCurrentUser().getUsername(),params[0].getObjectId());
                 return 100;
             }
         }.execute(momentForItem);
@@ -221,12 +218,12 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.ViewHolder
                         holder.mLike.setBackgroundResource(R.drawable.fragment_seleted_button);
                         holder.mIsLike=true;
                         MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
-                        MomentsController.like(GlobalVariable.username,momentForItem.getObjectId());
+                        MomentsController.like(AVUser.getCurrentUser().getUsername(),momentForItem.getObjectId());
                     }else{
                         holder.mLike.setBackgroundResource(R.drawable.fragment_unseleted_button);
                         holder.mIsLike=false;
                         MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
-                        MomentsController.dislike(GlobalVariable.username,momentForItem.getObjectId());
+                        MomentsController.dislike(AVUser.getCurrentUser().getUsername(),momentForItem.getObjectId());
                     }
                 }else{
                     Toast.makeText(parent.getContext(),"你尚未登录，无法点赞。",Toast.LENGTH_SHORT).show();
@@ -242,12 +239,12 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.ViewHolder
                         holder.mCollect.setBackgroundResource(R.drawable.fragment_seleted_button);
                         holder.mIsCollect=true;
                         MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
-                        MomentsController.collection(GlobalVariable.username,momentForItem.getObjectId());
+                        MomentsController.collection(AVUser.getCurrentUser().getUsername(),momentForItem.getObjectId());
                     }else{
                         holder.mCollect.setBackgroundResource(R.drawable.fragment_unseleted_button);
                         holder.mIsCollect=false;
                         MomentForItem momentForItem=mMomentForItems.get(holder.getAdapterPosition());
-                        MomentsController.disCollection(GlobalVariable.username,momentForItem.getObjectId());
+                        MomentsController.disCollection(AVUser.getCurrentUser().getUsername(),momentForItem.getObjectId());
                     }
                 }else{
                     Toast.makeText(parent.getContext(),"你尚未登录，无法收藏。",Toast.LENGTH_SHORT).show();

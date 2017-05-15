@@ -9,7 +9,6 @@ import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.SaveCallback;
 import com.sweetorangejuice.artisan.base.ArtisanApplication;
 import com.sweetorangejuice.artisan.base.BaseActivity;
-import com.sweetorangejuice.artisan.base.GlobalVariable;
 import com.sweetorangejuice.artisan.model.PersonalBean;
 import com.sweetorangejuice.artisan.util.LogUtil;
 import com.sweetorangejuice.artisan.view.Activity.LoginActivity;
@@ -127,7 +126,7 @@ public class PersonalController {
     public static List<String> getMyMoments(int limit,int skip)
     {
         AVQuery<AVObject> query = new AVQuery<>("Moments");
-        query.whereEqualTo("author",GlobalVariable.username);
+        query.whereEqualTo("author",AVUser.getCurrentUser().getUsername());
         query.limit(limit);
         query.skip(skip);
         query.addDescendingOrder("createdAt");
@@ -146,7 +145,7 @@ public class PersonalController {
     public static List<String> getMyCollection(int limit,int skip)
     {
         AVQuery<AVObject> query = new AVQuery<>("Collection");
-        query.whereEqualTo("username",GlobalVariable.username);
+        query.whereEqualTo("username",AVUser.getCurrentUser().getUsername());
         query.limit(limit);
         query.skip(skip);
         query.addDescendingOrder("createdAt");
