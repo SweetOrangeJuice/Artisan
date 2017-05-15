@@ -84,13 +84,13 @@ public class WriteFragment extends Fragment implements OnClickListener {
 				Bundle bundle = data.getExtras();
 				currentListfile = bundle.getStringArrayList("files");
 				for (int i = 0; i < currentListfile.size(); i++) {
-					if (listfile.size() < 9) {
-						listfile.add(currentListfile.get(i));
-					} else {
-						Toast.makeText(context, "最多只能添加九张照片!",
-								Toast.LENGTH_LONG).show();
-						break;
-					}
+						if (listfile.size() < 9) {
+							listfile.add(currentListfile.get(i));
+						} else {
+							Toast.makeText(context, "最多只能添加九张照片!",
+									Toast.LENGTH_LONG).show();
+							break;
+						}
 				}
 				getImageBitmap();
 				if (adapter != null) {

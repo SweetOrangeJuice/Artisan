@@ -134,27 +134,27 @@ public class ImgsSelectActivity extends Activity implements OnClickListener {
 	ImgsAdapter.OnItemClickClass onItemClickClass = new OnItemClickClass() {
 		@Override
 		public void OnItemClick(View v, int Position, CheckBox checkBox) {
-			String filapath = imagesPack.folderContent.get(Position);
+			String filepath = imagesPack.folderContent.get(Position);
 			if (isSingled) {
 				Intent intent = new Intent();
-				intent.putExtra("url", filapath);
+				intent.putExtra("url", filepath);
 				setResult(201, intent);
 				finish();
 			}
 			if (checkBox.isChecked()) {
 				checkBox.setChecked(false);
 				select_layout.removeView(hashImage.get(Position));
-				filelist.remove(filapath);
+				filelist.remove(filepath);
 				choise_button.setText("已选择(" + select_layout.getChildCount()
 						+ ")张");
 			} else {
 				try {
 					checkBox.setChecked(true);
-					ImageView imageView = iconImage(filapath, Position,
+					ImageView imageView = iconImage(filepath, Position,
 							checkBox);
 					if (imageView != null) {
 						hashImage.put(Position, imageView);
-						filelist.add(filapath);
+						filelist.add(filepath);
 						select_layout.addView(imageView);
 						choise_button.setText("已选择("
 								+ select_layout.getChildCount() + ")张");

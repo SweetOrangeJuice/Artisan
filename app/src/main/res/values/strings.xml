@@ -21,6 +21,10 @@
     <string name="main_activity_personal">我</string>
     <string name="fragment_personal_me">我</string>
     <string name="tourist">游客</string>
+    <string name="fragment_sub_personal_profiles_gender">性别</string>
+    <string name="fragment_sub_personal_profiles_age">年龄</string>
+    <string name="fragment_sub_personal_profiles_school">学校</string>
+    <string name="fragment_sub_personal_profiles_tag">标签</string>
     <string name="fragment_personal_moments">我的发布</string>
     <string name="fragment_personal_collections">我的收藏</string>
     <string name="fragment_personal_message">我的消息</string>
