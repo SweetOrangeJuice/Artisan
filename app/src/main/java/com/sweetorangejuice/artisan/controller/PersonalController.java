@@ -1,7 +1,8 @@
 package com.sweetorangejuice.artisan.controller;
 
+import android.util.Log;
+
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
@@ -13,7 +14,6 @@ import com.sweetorangejuice.artisan.model.PersonalBean;
 import com.sweetorangejuice.artisan.util.LogUtil;
 import com.sweetorangejuice.artisan.view.Activity.LoginActivity;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +67,7 @@ public class PersonalController {
         AVObject personalObject = null;
         try {
             personalObject = avQuery.getFirst();
+            Log.d("TAG",""+(personalObject==null)+","+AVUser.getCurrentUser().getUsername());
         } catch (AVException e) {
             if (e == null) {
                 return personalObject;
@@ -94,34 +95,26 @@ public class PersonalController {
      * @param personalBean
      */
     public static void modifyPersonalInfo(PersonalBean personalBean) {
-        AVObject personalObject = showPersonalInfo();
-        if (personalObject != null) {
-            try {
-                personalObject.put("gender", personalBean.getGender());
-                personalObject.put("age", personalBean.getAge());
-                personalObject.put("school", personalBean.getSchool());
-                personalObject.put("tag", personalBean.getTag());
-                //personalObject.put("headImage", AVFile.withAbsoluteLocalPath("headImg.jpg", personalBean.getHeadImage()));
-                personalObject.save();
-            } catch (AVException ex) {
-                if (ex == null) {
-                    /**
-                     * 在这里写发布成功的回调
-                     */
-                    LogUtil.d("MomentsController", "Distribute Success.");
-                } else {
-                    /**
-                     * 在这里写发布失败的回调
-                     */
-                    LogUtil.d("MomentsController", "Distribute Failed.");
-                }
+        AVQuery<AVObject> avQuery = new AVQuery<>("Person");
+        avQuery.whereEqualTo("username", AVUser.getCurrentUser().getUsername());
+        AVObject personalObject = null;
+        try {
+            personalObject = avQuery.getFirst();
+            personalObject.put("gender", personalBean.getGender());
+            personalObject.put("age", personalBean.getAge());
+            personalObject.put("school", personalBean.getSchool());
+            personalObject.put("tag", personalBean.getTag());
+            //personalObject.put("headImage", AVFile.withAbsoluteLocalPath("headImg.jpg", personalBean.getHeadImage()));
+            personalObject.saveInBackground();
+            Log.d("TAG",""+(personalObject==null)+","+AVUser.getCurrentUser().getUsername());
+        } catch (AVException e) {
+            if (e == null) {
+
+            } else {
+
             }
-        } else {
-            /**
-             * 在这里写发布失败的回调
-             */
-            LogUtil.d("MomentsController", "Distribute Failed.");
         }
+
     }
 
     /**
