@@ -5,19 +5,12 @@ package com.sweetorangejuice.artisan.model;
  */
 
 public class PersonalBean {
-    private boolean gender;
+    private String gender;
     private String school;
-    private int age;
+    private String age;
     private String headImage;
     private String tag;
 
-    public boolean getGender() {
-        return gender;
-    }
-
-    public void setGender(boolean gender) {
-        this.gender = gender;
-    }
 
     public String getSchool() {
         return school;
@@ -27,11 +20,19 @@ public class PersonalBean {
         this.school = school;
     }
 
-    public int getAge() {
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 

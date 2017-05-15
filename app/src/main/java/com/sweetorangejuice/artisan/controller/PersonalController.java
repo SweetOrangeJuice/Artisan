@@ -63,7 +63,7 @@ public class PersonalController {
      */
     public static AVObject showPersonalInfo() {
         AVQuery<AVObject> avQuery = new AVQuery<>("Person");
-        avQuery.whereEqualTo("username", GlobalVariable.username);
+        avQuery.whereEqualTo("username", AVUser.getCurrentUser().getUsername());
         AVObject personalObject = null;
         try {
             personalObject = avQuery.getFirst();
@@ -75,6 +75,17 @@ public class PersonalController {
             }
         }
         return null;
+    }
+
+    public static void UploadheadImage(String objectId){
+        try {
+            String PersonObjectIdCql = "select objectId from Person where username = " + AVUser.getCurrentUser().getUsername();
+            AVObject personalObject = AVQuery.doCloudQuery(PersonObjectIdCql).getResults().get(0);
+            String ImageUpdateCql = "update Person set headImage = '"+ objectId +"' where objectId = '"
+                    +(String)personalObject.get("objectId")+"'";
+            AVQuery.doCloudQuery(ImageUpdateCql);
+        }catch(Exception ex){
+        }
     }
 
     /**
@@ -90,7 +101,7 @@ public class PersonalController {
                 personalObject.put("age", personalBean.getAge());
                 personalObject.put("school", personalBean.getSchool());
                 personalObject.put("tag", personalBean.getTag());
-                personalObject.put("headImage", AVFile.withAbsoluteLocalPath("headImg.jpg", personalBean.getHeadImage()));
+                //personalObject.put("headImage", AVFile.withAbsoluteLocalPath("headImg.jpg", personalBean.getHeadImage()));
                 personalObject.save();
             } catch (AVException ex) {
                 if (ex == null) {
@@ -104,11 +115,6 @@ public class PersonalController {
                      */
                     LogUtil.d("MomentsController", "Distribute Failed.");
                 }
-            } catch (FileNotFoundException ex) {
-                /**
-                 * 在这里写发布失败的回调
-                 */
-                LogUtil.d("MomentsController", "Distribute Failed.");
             }
         } else {
             /**

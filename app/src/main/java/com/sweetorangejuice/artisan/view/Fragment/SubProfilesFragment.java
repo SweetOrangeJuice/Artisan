@@ -26,11 +26,15 @@ import android.widget.TextView;
 import com.avos.avoscloud.AVCloudQueryResult;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.CloudQueryCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.sweetorangejuice.artisan.R;
+import com.sweetorangejuice.artisan.controller.FileController;
+import com.sweetorangejuice.artisan.controller.PersonalController;
+import com.sweetorangejuice.artisan.model.PersonalBean;
 import com.sweetorangejuice.artisan.util.FileUtils;
 import com.sweetorangejuice.artisan.util.LogUtil;
 import com.sweetorangejuice.artisan.view.Activity.FolderListActivity;
@@ -60,6 +64,7 @@ public class SubProfilesFragment extends Fragment{
     private TextView ageTextView;
     private TextView schoolTextView;
     private TextView tagTextView;
+    private PersonalBean personalInfo;
     private Uri outputFileUri;// 照相机照片缓存位置
     public static Fragment newInstance(){
         return new SubProfilesFragment();
@@ -77,6 +82,14 @@ public class SubProfilesFragment extends Fragment{
         tagTextView = (TextView)view.findViewById(R.id.fragment_sub_personal_profiles_tag_edit);
         mBackImageView=(ImageView)view.findViewById(R.id.fragment_sub_profiles_back);
         usernameTextView.setText(AVUser.getCurrentUser().getUsername());
+        AVObject personalObject = PersonalController.showPersonalInfo();
+        String imageObjectId = (String)personalObject.get("headImage");
+        genderTextView.setText((String)personalObject.get("gender"));
+        ageTextView.setText((String)personalObject.get("age"));
+        schoolTextView.setText((String)personalObject.get("school"));
+        tagTextView.setText((String)personalObject.get("tag"));
+        FileController.getThumbnailbyObjectId(imageObjectId,100,100);
+        //这里写显示图片
 
         modifyPersonalProfilesButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -247,14 +260,7 @@ public class SubProfilesFragment extends Fragment{
                             Log.d("TAG","SUCCESS");
                             //Todo 这里写更新用户信息表中头像的代码
                             objectId = file.getObjectId();
-                            AVQuery.doCloudQueryInBackground("update Person set headImage='" + objectId + "' where username='" + AVUser.getCurrentUser().getUsername() + "'",
-                                    new CloudQueryCallback<AVCloudQueryResult>() {
-                                        @Override
-                                        public void done(AVCloudQueryResult avCloudQueryResult, AVException e) {
-                                            // 如果 e 为空，说明保存成功
-                                            LogUtil.d("TAG", "保存成功");
-                                        }
-                                    });
+                            PersonalController.UploadheadImage(objectId);
                         } else {
                             //Todo 这里写上传头像失败的代码
                             Log.d("TAG","FAILED");
