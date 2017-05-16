@@ -60,5 +60,6 @@
     <string name="fragment_detail_list">评论列表</string>
     <string name="loading">加载中</string>
     <string name="fragment_others_profiles_profiles">Ta的资料</string>
+    <string name="fragment_home_pics_text">每日精选图片</string>
 
 </resources>

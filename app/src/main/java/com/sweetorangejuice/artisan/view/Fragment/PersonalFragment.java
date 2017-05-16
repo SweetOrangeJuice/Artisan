@@ -83,25 +83,41 @@ public class PersonalFragment extends Fragment {
         mMomentsLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SubPersonalActivity.actionStart(getActivity(),SubPersonalActivity.ACTION_MOMENTS);
+                if(AVUser.getCurrentUser()!=null){
+                    SubPersonalActivity.actionStart(getActivity(),SubPersonalActivity.ACTION_MOMENTS);
+                }else {
+                    Toast.makeText(getActivity(),"您还未登录。",Toast.LENGTH_SHORT).show();
+                }
             }
         });
         mCollectionsLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SubPersonalActivity.actionStart(getActivity(),SubPersonalActivity.ACTION_COLLECTIONS);
+                if(AVUser.getCurrentUser()!=null){
+                    SubPersonalActivity.actionStart(getActivity(),SubPersonalActivity.ACTION_COLLECTIONS);
+                }else {
+                    Toast.makeText(getActivity(),"您还未登录。",Toast.LENGTH_SHORT).show();
+                }
             }
         });
         mIdolsLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SubPersonalActivity.actionStart(getActivity(),SubPersonalActivity.ACTION_IDOLS);
+                if(AVUser.getCurrentUser()!=null){
+                    SubPersonalActivity.actionStart(getActivity(),SubPersonalActivity.ACTION_IDOLS);
+                }else {
+                    Toast.makeText(getActivity(),"您还未登录。",Toast.LENGTH_SHORT).show();
+                }
             }
         });
         mFollowersLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SubPersonalActivity.actionStart(getActivity(),SubPersonalActivity.ACTION_FOLLOWERS);
+                if(AVUser.getCurrentUser()!=null){
+                    SubPersonalActivity.actionStart(getActivity(),SubPersonalActivity.ACTION_FOLLOWERS);
+                }else {
+                    Toast.makeText(getActivity(),"您还未登录。",Toast.LENGTH_SHORT).show();
+                }
             }
         });
         mMessagesLinearLayout.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +130,11 @@ public class PersonalFragment extends Fragment {
         mProfilesLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SubPersonalActivity.actionStart(getActivity(),SubPersonalActivity.ACTION_PROFILES);
+                if(AVUser.getCurrentUser()!=null){
+                    SubPersonalActivity.actionStart(getActivity(),SubPersonalActivity.ACTION_PROFILES);
+                }else {
+                    Toast.makeText(getActivity(),"您还未登录。",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
