@@ -1,5 +1,6 @@
 package com.sweetorangejuice.artisan.view.Fragment;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,10 +12,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
+import com.bumptech.glide.Glide;
 import com.sweetorangejuice.artisan.R;
+import com.sweetorangejuice.artisan.controller.FileController;
 import com.sweetorangejuice.artisan.controller.PersonalController;
 import com.sweetorangejuice.artisan.view.Activity.SubPersonalActivity;
+
+import pl.droidsonroids.gif.GifTextView;
 
 /**
  * Created by as on 2017/5/3.
@@ -34,6 +42,7 @@ public class PersonalFragment extends Fragment {
     private ImageView mRedDotImageView;
     private LinearLayout mProfilesLinearLayout;
     private Button mLogOutButton;
+    private GifTextView mLoadingTextView;
 
     //当前用户
     private AVUser mCurrentUser;
@@ -61,6 +70,7 @@ public class PersonalFragment extends Fragment {
         mRedDotImageView=(ImageView)view.findViewById(R.id.fragment_personal_red_dot);
         mProfilesLinearLayout=(LinearLayout)view.findViewById(R.id.fragment_personal_profiles);
         mLogOutButton=(Button)view.findViewById(R.id.fragment_personal_log_out);
+        mLoadingTextView=(GifTextView)view.findViewById(R.id.fragment_personal_loading);
 
         //绑定事件
         mLogOutButton.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +117,9 @@ public class PersonalFragment extends Fragment {
         });
 
         //视图初始化
-        updateUI();
+        //updateUI();
+
+        //loadHeadPortrait();
 
         return view;
     }
@@ -133,9 +145,49 @@ public class PersonalFragment extends Fragment {
             mLogOutButton.setText(R.string.fragment_personal_log_out);
             String name=mCurrentUser.getUsername();
             mNameTextView.setText(name);
+            loadHeadPortrait();
         }else{
             mLogOutButton.setText(R.string.fragment_personal_login);
             mNameTextView.setText(R.string.tourist);
+            Glide.with(getActivity()).load(R.drawable.head_portrait).into(mHeadPortraitImageView);
+            mHeadPortraitImageView.setVisibility(View.VISIBLE);
+            mLoadingTextView.setVisibility(View.GONE);
         }
+    }
+
+    private void loadHeadPortrait(){
+        AsyncTask<String,Integer,Integer> task=new AsyncTask<String, Integer, Integer>() {
+            byte[] img;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                mLoadingTextView.setVisibility(View.VISIBLE);
+                mHeadPortraitImageView.setVisibility(View.GONE);
+            }
+
+            @Override
+            protected void onPostExecute(Integer integer) {
+                super.onPostExecute(integer);
+                Glide.with(getActivity()).load(img).into(mHeadPortraitImageView);
+                mLoadingTextView.setVisibility(View.GONE);
+                mHeadPortraitImageView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            protected Integer doInBackground(String... params) {
+                AVQuery<AVObject> query=new AVQuery<AVObject>("Person");
+                query.whereEqualTo("username",AVUser.getCurrentUser().getUsername());
+                AVObject result;
+                try {
+                    result=query.getFirst();
+                    img=FileController.getThumbnailbyObjectId((String)result.get("headImage"),100,100);
+                }catch (AVException e){
+                    e.printStackTrace();
+                }
+
+                return 100;
+            }
+        }.execute();
     }
 }

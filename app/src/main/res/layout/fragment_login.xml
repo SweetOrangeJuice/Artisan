@@ -17,9 +17,11 @@
 
     <ImageView
         android:id="@+id/sign_in_logo_image_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
+        android:layout_width="300dp"
+        android:layout_height="225dp"
+        android:layout_marginTop="80dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo_home"/>
 
     <LinearLayout
         android:id="@+id/login_button_linear_layout"
