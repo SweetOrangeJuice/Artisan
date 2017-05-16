@@ -125,7 +125,7 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.ViewHolder
         }.execute(momentForItem);
 
         byte[] headPortrait=momentForItem.getHeadPortrait();
-        if(headPortrait!=null&&headPortrait.length>0){
+        if(headPortrait!=null){
             Glide.with(ArtisanApplication.getContext()).load(headPortrait).into(holder.mHeadPortrait);
         }else{
             Glide.with(ArtisanApplication.getContext()).load(R.drawable.head_portrait).into(holder.mHeadPortrait);

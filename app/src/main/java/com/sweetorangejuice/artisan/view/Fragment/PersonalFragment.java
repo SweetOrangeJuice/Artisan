@@ -171,7 +171,11 @@ public class PersonalFragment extends Fragment {
             @Override
             protected void onPostExecute(Integer integer) {
                 super.onPostExecute(integer);
-                Glide.with(getActivity()).load(img).into(mHeadPortraitImageView);
+                if(img!=null){
+                    Glide.with(getActivity()).load(img).into(mHeadPortraitImageView);
+                }else {
+                    Glide.with(getActivity()).load(R.id.head_portrait).into(mHeadPortraitImageView);
+                }
                 mLoadingTextView.setVisibility(View.GONE);
                 mHeadPortraitImageView.setVisibility(View.VISIBLE);
             }

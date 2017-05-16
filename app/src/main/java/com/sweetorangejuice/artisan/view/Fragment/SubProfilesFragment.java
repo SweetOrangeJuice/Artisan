@@ -377,27 +377,27 @@ public class SubProfilesFragment extends Fragment{
             protected void onPostExecute(Integer integer) {
                 super.onPostExecute(integer);
 
-                if(gender!=null&&!gender.equals("")){
+                if(gender!=null){
                     genderTextView.setText(gender);
                 }else {
                     genderTextView.setText("空");
                 }
-                if(age!=null&&!age.equals("")){
+                if(age!=null){
                     ageTextView.setText(age);
                 }else {
                     ageTextView.setText("空");
                 }
-                if(school!=null&&!school.equals("")){
+                if(school!=null){
                     schoolTextView.setText(school);
                 }else {
                     schoolTextView.setText("空");
                 }
-                if(label!=null&&!label.equals("")){
+                if(label!=null){
                     tagTextView.setText(label);
                 }else {
                     tagTextView.setText("空");
                 }
-                if(headPortrait!=null&&headPortrait.length>0){
+                if(headPortrait!=null){
                     Glide.with(getActivity()).load(headPortrait).into(headCircleImageView);
                 }else {
 
