@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.avos.avoscloud.AVUser;
 import com.sweetorangejuice.artisan.R;
@@ -93,10 +94,14 @@ public class DetailFragment extends Fragment {
         mCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text=mContentEditText.getText().toString();
-                MomentsController.Comments(AVUser.getCurrentUser().getUsername(),mObjectId,text);
-                mContentEditText.setText("");
-                refresh(text);
+                if(mContentEditText.length()<=0||mContentEditText.getText().toString().equals("")){
+                    Toast.makeText(getActivity(),"文本框不能为空",Toast.LENGTH_SHORT).show();
+                }else {
+                    String text=mContentEditText.getText().toString();
+                    MomentsController.Comments(AVUser.getCurrentUser().getUsername(),mObjectId,text);
+                    mContentEditText.setText("");
+                    refresh(text);
+                }
             }
         });
 
@@ -126,10 +131,14 @@ public class DetailFragment extends Fragment {
     }
 
     private void refresh(String text){
-        Comment comment=new Comment();
-        comment.setText(text);
-        comment.setAccount(AVUser.getCurrentUser().getUsername());
-        mComments.add(comment);
-        mAdapter.notifyDataSetChanged();
+        if(text.equals("")||text.length()<=0){
+            Toast.makeText(getActivity(),"文本框不能为空",Toast.LENGTH_SHORT).show();
+        }else{
+            Comment comment=new Comment();
+            comment.setText(text);
+            comment.setAccount(AVUser.getCurrentUser().getUsername());
+            mComments.add(comment);
+            mAdapter.notifyDataSetChanged();
+        }
     }
 }

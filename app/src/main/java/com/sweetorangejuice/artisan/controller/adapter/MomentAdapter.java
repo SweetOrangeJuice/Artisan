@@ -118,8 +118,12 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.ViewHolder
 
             @Override
             protected Integer doInBackground(MomentForItem... params) {
-                isLike=MomentsController.isLike(AVUser.getCurrentUser().getUsername(),params[0].getObjectId());
-                isCollected=MomentsController.isCollect(AVUser.getCurrentUser().getUsername(),params[0].getObjectId());
+                if(AVUser.getCurrentUser()!=null){
+                    isLike=MomentsController.isLike(AVUser.getCurrentUser().getUsername(),params[0].getObjectId());
+                    isCollected=MomentsController.isCollect(AVUser.getCurrentUser().getUsername(),params[0].getObjectId());
+                }else {
+                    isLike=isCollected=false;
+                }
                 return 100;
             }
         }.execute(momentForItem);

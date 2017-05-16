@@ -1,8 +1,5 @@
 package com.sweetorangejuice.artisan.view.Fragment;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
 import com.sweetorangejuice.artisan.R;
 import com.sweetorangejuice.artisan.controller.FileController;
 import com.sweetorangejuice.artisan.controller.MomentsController;
@@ -23,7 +23,6 @@ import com.sweetorangejuice.artisan.controller.adapter.MomentAdapter;
 import com.sweetorangejuice.artisan.model.MomentForItem;
 import com.sweetorangejuice.artisan.model.MomentsBean;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,11 +98,23 @@ public class SubCollectionFragment extends Fragment {
                     }
 
                     //以下为暂时替代的头像
+                    /*
                     Resources resources=getResources();
                     Bitmap bitmap= BitmapFactory.decodeResource(resources,R.drawable.head_portrait);
                     ByteArrayOutputStream out=new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG,100,out);
                     momentForItem.setHeadPortrait(out.toByteArray());
+                    */
+                    AVQuery<AVObject> query=new AVQuery<AVObject>("Person");
+                    query.whereEqualTo("username",momentForItem.getAccount());
+                    AVObject result0;
+                    try {
+                        result0=query.getFirst();
+                        byte[] headPortrait=FileController.getThumbnailbyObjectId((String)result0.get("headImage"),50,50);
+                        momentForItem.setHeadPortrait(headPortrait);
+                    }catch (AVException e){
+                        e.printStackTrace();
+                    }
 
                     result.add(momentForItem);
                 }
