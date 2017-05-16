@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
@@ -106,7 +107,8 @@ public class PersonalFragment extends Fragment {
         mMessagesLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SubPersonalActivity.actionStart(getActivity(),SubPersonalActivity.ACTION_MESSAGES);
+                Toast.makeText(getActivity(),"此功能暂未开放！", Toast.LENGTH_SHORT).show();
+                //SubPersonalActivity.actionStart(getActivity(),SubPersonalActivity.ACTION_MESSAGES);
             }
         });
         mProfilesLinearLayout.setOnClickListener(new View.OnClickListener() {

@@ -124,7 +124,12 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.ViewHolder
             }
         }.execute(momentForItem);
 
-        Glide.with(ArtisanApplication.getContext()).load(momentForItem.getHeadPortrait()).into(holder.mHeadPortrait);
+        byte[] headPortrait=momentForItem.getHeadPortrait();
+        if(headPortrait!=null&&headPortrait.length>0){
+            Glide.with(ArtisanApplication.getContext()).load(headPortrait).into(holder.mHeadPortrait);
+        }else{
+            Glide.with(ArtisanApplication.getContext()).load(R.drawable.head_portrait).into(holder.mHeadPortrait);
+        }
         holder.mAccount.setText(momentForItem.getAccount());
         holder.mContent.setText(momentForItem.getContent());
         if(momentForItem.getImagesList().size()<=0){
