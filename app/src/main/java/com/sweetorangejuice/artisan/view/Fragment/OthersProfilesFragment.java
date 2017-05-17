@@ -15,9 +15,9 @@ import android.widget.TextView;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
+import com.bumptech.glide.Glide;
 import com.sweetorangejuice.artisan.R;
-
-import java.util.List;
+import com.sweetorangejuice.artisan.controller.FileController;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -92,8 +92,12 @@ public class OthersProfilesFragment extends Fragment {
                 mAgeTextView.setText(age);
                 mSchoolTextView.setText(school);
                 mLabelTextView.setText(label);
-                //TODO:获取了头像数据流后，解除下方注释
-                //Glide.with(getActivity()).load(headPortrait).into(mHeadPortraitImageView);
+
+                if(headPortrait!=null){
+                    Glide.with(getActivity()).load(headPortrait).into(mHeadPortraitImageView);
+                }else {
+                    Glide.with(getActivity()).load(R.id.head_portrait).into(mHeadPortraitImageView);
+                }
 
                 mLoadingRelativeLayout.setVisibility(View.GONE);
                 mDataLinearLayout.setVisibility(View.VISIBLE);
@@ -103,11 +107,14 @@ public class OthersProfilesFragment extends Fragment {
             protected Integer doInBackground(String... params) {
                 AVQuery<AVObject> query=new AVQuery<AVObject>("Person");
                 query.whereEqualTo("username",params[0]);
-                List<AVObject> result;
+                AVObject avObject;
                 try {
-                    result=query.find();
-                    //TODO:获取gender，age，school，label,head portrait；并解除下方注释
-                    //headPortrait=FileController.getPicturebyObjectId();
+                    avObject=query.getFirst();
+                    gender=(String)avObject.get("gender");
+                    age=(String)avObject.get("age");
+                    school=(String)avObject.get("school");
+                    label=(String)avObject.get("tag");
+                    headPortrait= FileController.getPicturebyObjectId((String) avObject.get("headImage"));
                 }catch (AVException e){
                     e.printStackTrace();
                 }

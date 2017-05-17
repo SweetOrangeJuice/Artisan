@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="TabContainerView-v1.0">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.chenpengfei88/TabContainerView/v1.0/res" />
-      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.chenpengfei88/TabContainerView/v1.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/cae5652a1ccb99a16b32d0eb85c7ca9a1faeeff7/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/cae5652a1ccb99a16b32d0eb85c7ca9a1faeeff7/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
